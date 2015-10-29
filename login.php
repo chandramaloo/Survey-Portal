@@ -2,7 +2,7 @@
 include("config.php");
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);    
+error_reporting(E_ALL);
 session_start();
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -21,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		$_SESSION['login_user']=$user_id;
 		header("location: welcome.php");
 	}
-	else 
+	else
 	{
 		$error="Your Login Name or Password is invalid";
 	}

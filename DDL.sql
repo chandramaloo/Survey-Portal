@@ -1,12 +1,55 @@
 create table users
 	(
-		user_id char(9),
-		password varchar(30),
-		name varchar(30),
-		department varchar(30),
-		year varchar(30),
-		email varchar(30)
+		user_id char(9) primary key,
+		password varchar(30) not null,
+		name varchar(30) not null,
+		department varchar(30) not null,
+		year numeric(4,0),
+		email varchar(50) not null
 		);
+
+create table form
+	(
+		form_id char(10) primary key,
+		start_time timestamp,
+		end_time timestamp,
+		anonymity char(1) check (anonymity in ('0','1'))
+		);
+
+create table role
+	(
+		form_id char(10),
+		user_id char(9),
+		privilege char(1) check (privilege in ('0','1')),
+		status char(1) check (status in ('0','1')),
+		primary key (form_id,user_id,privilege),
+		foreign key (form_id) references form(form_id),
+		foreign key (user_id) references users(user_id),
+		constraint privilege_status check ((privilege ='0' and status = '0') or privilege = '1')
+		);
+
+create table survey_questions
+	(
+		form_id char(10),
+		question_id char(10),
+		type char(1),
+		default_answer varchar(20),
+		is_compulsory char(1),
+		content varchar(1000),
+		extra_content bytea,
+		primary key (form_id,question_id),
+		foreign key (form_id) references form(form_id));
+
+create table survey_responses
+	(
+		form_id char(10),
+		question_id char(10),
+		user_id char(9),
+		response varchar(1000),
+		primary key (form_id,question_id,user_id),
+		foreign key (form_id,question_id) references survey_questions,
+		foreign key (user_id) references users(user_id));
+
 
 -- create table classroom
 -- 	(building		varchar(15),

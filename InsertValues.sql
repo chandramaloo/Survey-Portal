@@ -1,7 +1,49 @@
 delete from users;
+delete from form;
+delete from role; 
+delete from survey_questions;
+delete from survey_responses;
+
 insert into users values ('130050004','kunal','kunal','cse','2017','kunalagrawal1995@gmail.com');
 insert into users values ('130050009','chandra','chandra','cse','2017','maloochandra@gmail.com');
 insert into users values ('130050015','parth','parth','cse','2017','1995.parthshah@gmail.com');
+
+insert into form values ('1234567890','2015-10-20 09:00:00','2015-10-25 09:00:00','1');
+insert into form values ('1234567891','2015-10-20 09:00:00','2015-11-25 09:00:00','0');
+insert into form values ('1234567892','2015-08-20 09:00:00','2015-08-25 09:00:00','0');
+insert into form values ('1234567893','2015-11-15 09:00:00','2015-11-25 09:00:00','1');
+
+insert into role values ('1234567890','130050004','0','0');
+insert into role values ('1234567890','130050009','1','1');
+insert into role values ('1234567890','130050015','1','0');
+insert into role values ('1234567891','130050015','0','0');
+insert into role values ('1234567892','130050009','0','0');
+insert into role values ('1234567891','130050015','1','0');
+insert into role values ('1234567891','130050004','1','0');
+insert into role values ('1234567892','130050015','0','0');
+insert into role values ('1234567893','130050009','0','0');
+insert into role values ('1234567893','130050004','1','0');
+
+insert into survey_questions values ('1234567890','0000000001','0','default_ans0','1','how you doin?');
+insert into survey_questions values ('1234567890','0000000002','1','default_ans1','1','abc?');
+insert into survey_questions values ('1234567890','0000000003','0','default_ans0','0','who?');
+insert into survey_questions values ('1234567891','0000000001','2','default_ans2','0','how?');
+insert into survey_questions values ('1234567891','0000000002','3','default_ans3','0','what?');
+insert into survey_questions values ('1234567893','0000000001','4','default_ans4','1','when?');
+insert into survey_questions values ('1234567893','0000000002','5','default_ans5','0','hunh?');
+insert into survey_questions values ('1234567893','0000000003','6','default_ans6','0','are you kiddin me?');
+
+insert into survey_responses values ('1234567890','0000000001','130050004','i m okay');
+insert into survey_responses values ('1234567890','0000000002','130050004','i m okay');
+insert into survey_responses values ('1234567890','0000000003','130050004','i m okay');
+insert into survey_responses values ('1234567891','0000000001','130050009','i m okay');
+insert into survey_responses values ('1234567891','0000000002','130050009','i m okay');
+insert into survey_responses values ('1234567893','0000000001','130050015','i m okay');
+insert into survey_responses values ('1234567893','0000000002','130050015','i m okay');
+insert into survey_responses values ('1234567893','0000000003','130050015','i m okay');
+
+
+
 
 -- delete from prereq;
 -- delete from time_slot;
