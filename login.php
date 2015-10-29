@@ -10,7 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	$myusername=pg_escape_string($_POST['username']); 
 	$mypassword=pg_escape_string($_POST['password']); 
 
-	$query = "SELECT userid FROM users WHERE userid='$myusername' and name ='$mypassword'";
+	$query = "SELECT userid FROM users WHERE userid='$myusername' and password ='$mypassword'";
 	$result=pg_query($db, $query);
 	$row=pg_fetch_row($result);
 	$active=$row[0];
@@ -50,10 +50,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   </div>
   <div class="panel-body">
 	<form action="login.php" method="post">
-	<label>UserName :</label>
+	<label>UserID :</label>
 	<input type="text" class="form-control" name="username"/><br />
 	<label>Password :</label>
 	<input type="password" class="form-control" name="password"/><br/>
+	<h6><a href="register.php">New User? Register Now!!</a></h6>
 	<input type="submit" class="btn btn-primary btn-lg" value=" Submit "/><br />
 	</form>
   </div>
