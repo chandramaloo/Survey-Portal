@@ -1,4 +1,9 @@
+drop table survey_responses;
+drop table survey_questions;
+drop table role;
+drop table form;
 drop table users;
+
 -- drop table time_slot;
 -- drop table advisor;
 -- drop table takes;

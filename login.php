@@ -7,21 +7,18 @@ session_start();
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	// username and password sent from Form
-	$myusername=pg_escape_string($_POST['username']);
-	$mypassword=pg_escape_string($_POST['password']);
+	$user_id=pg_escape_string($_POST['username']); 
+	$password=pg_escape_string($_POST['password']); 
 
-	$query = "SELECT userid FROM users WHERE userid='$myusername' and password ='$mypassword'";
-	$result=pg_query($db, $query);
-	$row=pg_fetch_row($result);
-	$active=$row[0];
-	$count=pg_num_rows($result);
+	$result = pg_prepare($db, "login", 'SELECT user_id FROM users WHERE user_id=$1 and password=$2');
+	$result = pg_execute($db, "login", array($user_id, $password));
+	$row = pg_fetch_row($result);
+	$count = pg_num_rows($result);
 
-
-	// If result matched $myusername and $mypassword, table row must be 1 row
 	if($count==1)
 	{
 		//session_register("myusername");
-		$_SESSION['login_user']=$myusername;
+		$_SESSION['login_user']=$user_id;
 		header("location: welcome.php");
 	}
 	else
