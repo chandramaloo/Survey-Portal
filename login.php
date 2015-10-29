@@ -2,13 +2,13 @@
 include("config.php");
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);    
+error_reporting(E_ALL);
 session_start();
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	// username and password sent from Form
-	$myusername=pg_escape_string($_POST['username']); 
-	$mypassword=pg_escape_string($_POST['password']); 
+	$myusername=pg_escape_string($_POST['username']);
+	$mypassword=pg_escape_string($_POST['password']);
 
 	$query = "SELECT userid FROM users WHERE userid='$myusername' and password ='$mypassword'";
 	$result=pg_query($db, $query);
@@ -24,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		$_SESSION['login_user']=$myusername;
 		header("location: welcome.php");
 	}
-	else 
+	else
 	{
 		$error="Your Login Name or Password is invalid";
 	}
