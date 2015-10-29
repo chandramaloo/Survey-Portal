@@ -6,7 +6,8 @@ include('lock.php');
 ?>
 <body>
 <h1>Welcome <?php echo $_SESSION['login_user']; ?></h1>
+<a href='addForm.php'>Add Form</a>
 <form action="logout.php" method="post">
-	<input type="submit" value=" Logout "/><br />
+	<input type="submit" value="Logout"/><br />
 </form>
 </body>
