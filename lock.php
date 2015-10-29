@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL); 
 $user_check=$_SESSION['login_user'];
-$ses_sql=pg_query($db,"select userid from users where userid='$user_check' ");
+$ses_sql=pg_query($db,"select user_id from users where user_id='$user_check' ");
 
 $row=pg_fetch_row($ses_sql);
 

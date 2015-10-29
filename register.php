@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		echo '<script type="text/javascript">alert("Please select an email");</script>';
 	}
 	else{
-		$query = "SELECT userid FROM users WHERE userid='$userID'";
+		$query = "SELECT user_id FROM users WHERE user_id='$userID'";
 		$result=pg_query($db, $query);
 		$row=pg_fetch_row($result);
 		$count=pg_num_rows($result);
@@ -42,8 +42,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		else 
 		{
 			
-			$result = pg_prepare($db, "add_user", 'insert into users values($1, $2, $3, $4, $5, $6)');
-			$result = pg_execute($db, "add_user", array($userID, $username, $department, $password, $email, $year));
+			$result = pg_prepare($db, "add_user", 'INSERT into users values($1, $2, $3, $4, $5, $6)');
+			$result = pg_execute($db, "add_user", array($userID, $password, $username, $department, $year, $email));
 			if($result != false){
 				$_SESSION['login_user']=$userID;
 				header("location: welcome.php");
