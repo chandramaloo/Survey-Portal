@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	$email=pg_escape_string($_POST['email']); 
 
 
-	if(empty($userid)){
+	if(empty($userID)){
 		echo '<script type="text/javascript">alert("Please select an user id");</script>';
 	}
 	else if(empty($username)){
