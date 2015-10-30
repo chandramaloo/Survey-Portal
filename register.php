@@ -1,5 +1,5 @@
 <?php
-include("config.php");
+include("user.php");
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);    
@@ -31,23 +31,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		echo '<script type="text/javascript">alert("Please select an email");</script>';
 	}
 	else{
-		$query = "SELECT user_id FROM users WHERE user_id='$userID'";
-		$result=pg_query($db, $query);
-		$row=pg_fetch_row($result);
-		$count=pg_num_rows($result);
-		if($count==1)
+		$user = new User();
+		$checkUID = $user->checkUID($userID);
+		if($checkUID==1)
 		{
-			echo '<script type="text/javascript">alert("Sorry the userID has already been taken, please select a different one");</script>';
-		}
-		else 
-		{
-			
-			$result = pg_prepare($db, "add_user", 'INSERT into users values($1, $2, $3, $4, $5, $6)');
-			$result = pg_execute($db, "add_user", array($userID, $password, $username, $department, $year, $email));
-			if($result != false){
+			$addUser = $user->addUser($userID, $password, $username, $department, $year, $email);
+			if($addUser == 1){
 				$_SESSION['login_user']=$userID;
 				header("location: welcome.php");
 			}
+			else{
+				echo '<script type="text/javascript">alert("An error occured during registration please try again");</script>';		
+			}
+		}
+		else 
+		{
+			echo '<script type="text/javascript">alert("Sorry the userID has already been taken, please select a different one");</script>';
 		}
 	}
 }
@@ -71,20 +70,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     <h3 class="panel-title">Please enter your details to Register</h3>
   </div>
   <div class="panel-body">
-	<form action="register.php" method="post">
-	<label>UserID :</label>
-	<input type="text" class="form-control" name="userID"/><br />
-	<label>User Name :</label>
-	<input type="text" class="form-control" name="username"/><br />
-	<label>Password :</label>
-	<input type="password" class="form-control" name="password"/><br/>
-	<label>Department :</label>
-	<input type="text" class="form-control" name="department"/><br />
-	<label>Year :</label>
-	<input type="text" class="form-control" name="year"/><br />
-	<label>Email :</label>
-	<input type="text" class="form-control" name="email"/><br />
-	<input type="submit" class="btn btn-primary btn-lg" value=" Submit "/><br />
+	<form action="register.php" method="post" class = "form-horizontal">
+	<div class="form-group">	
+		<label>UserID :</label>
+		<input type="text" class="form-control" name="userID"/><br />
+		<label>User Name :</label>
+		<input type="text" class="form-control" name="username"/><br />
+		<label>Password :</label>
+		<input type="password" class="form-control" name="password"/><br/>
+		<label>Department :</label>
+		<input type="text" class="form-control" name="department"/><br />
+		<label>Year :</label>
+		<input type="text" class="form-control" name="year"/><br />
+		<label>Email :</label>
+		<input type="text" class="form-control" name="email"/><br />
+		<input type="submit" class="btn btn-primary btn-lg" value=" Submit "/><br />
+	</div>
 	</form>
   </div>
 </div>
