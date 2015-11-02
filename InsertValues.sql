@@ -1,17 +1,17 @@
-delete from users;
-delete from form;
-delete from role; 
-delete from survey_questions;
 delete from survey_responses;
+delete from survey_questions;
+delete from role;
+delete from form;
+delete from users; 
 
 insert into users values ('130050004','kunal','kunal','cse','2017','kunalagrawal1995@gmail.com');
 insert into users values ('130050009','chandra','chandra','cse','2017','maloochandra@gmail.com');
 insert into users values ('130050015','parth','parth','cse','2017','1995.parthshah@gmail.com');
 
-insert into form values ('1234567890','2015-10-20 09:00:00','2015-10-25 09:00:00','1');
-insert into form values ('1234567891','2015-10-20 09:00:00','2015-11-25 09:00:00','0');
-insert into form values ('1234567892','2015-08-20 09:00:00','2015-08-25 09:00:00','0');
-insert into form values ('1234567893','2015-11-15 09:00:00','2015-11-25 09:00:00','1');
+insert into form values ('1234567890','2015-10-20 09:00:00','2015-10-25 09:00:00','1','abc');
+insert into form values ('1234567891','2015-10-20 09:00:00','2015-11-25 09:00:00','0','def');
+insert into form values ('1234567892','2015-08-20 09:00:00','2015-08-25 09:00:00','0','ghi');
+insert into form values ('1234567893','2015-11-15 09:00:00','2015-11-25 09:00:00','1','klm');
 
 insert into role values ('1234567890','130050004','0','0');
 insert into role values ('1234567890','130050009','1','1');

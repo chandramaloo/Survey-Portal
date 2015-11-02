@@ -1,6 +1,6 @@
 create table users
 	(
-		user_id char(9) primary key,
+		user_id varchar(20) primary key,
 		password varchar(30) not null,
 		name varchar(30) not null,
 		department varchar(30) not null,
@@ -10,16 +10,17 @@ create table users
 
 create table form
 	(
-		form_id char(10) primary key,
+		form_id varchar(45) primary key,
 		start_time timestamp,
 		end_time timestamp,
-		anonymity char(1) check (anonymity in ('0','1'))
+		anonymity char(1) check (anonymity in ('0','1')),
+		form_name varchar(20)
 		);
 
 create table role
 	(
-		form_id char(10),
-		user_id char(9),
+		form_id varchar(45),
+		user_id varchar(20),
 		privilege char(1) check (privilege in ('0','1')),
 		status char(1) check (status in ('0','1')),
 		primary key (form_id,user_id,privilege),
@@ -30,7 +31,7 @@ create table role
 
 create table survey_questions
 	(
-		form_id char(10),
+		form_id varchar(45),
 		question_id char(10),
 		type char(1),
 		default_answer varchar(20),
@@ -42,9 +43,9 @@ create table survey_questions
 
 create table survey_responses
 	(
-		form_id char(10),
+		form_id varchar(45),
 		question_id char(10),
-		user_id char(9),
+		user_id varchar(20),
 		response varchar(1000),
 		primary key (form_id,question_id,user_id),
 		foreign key (form_id,question_id) references survey_questions,
