@@ -6,14 +6,33 @@
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 	<title>Create Survey</title>
 </head>
-<body>
-	<div id="ques-done-cont">
+<body style="margin:20px;">
+	<div id="ques-done">
 		Submitted Questions<br>
 	</div>
-	<div id="ques-active-cont">
-		
+	<div id="ques-active">
+		<div id="ques-type">
+			
+		</div>
+		<div id="ques-text">
+			
+		</div>
+		<div id="ques-opt">
+			<div id="ques-opt-done">
+				
+			</div>
+			<div id="ques-opt-active">
+				
+			</div>
+			<div id="ques-opt-foot">
+				
+			</div>
+		</div>
+		<div id="ques-foot">
+			
+		</div>
 	</div>
 	<input id='add-ques-btn' type="button" class='btn btn-success' onclick="addQuestion()" value="Add Question"/>
-	<input id='done-btn' type="button" class='btn btn-success' value="Done"/>
+	<input id='done-btn' type="button" class='btn btn-success' onclick="submitForm()" value="Done"/>
 </body>
 </html>

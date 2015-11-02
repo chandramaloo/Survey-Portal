@@ -1,9 +1,6 @@
 var count = 0;
 
-function addQuestion(){
-	count++;
-	$ques = $("#ques-active-cont");
-	var $quesNew = 	"Active Question<br><br>Question " + count + ":<br>" +
+var $quesNew = 	"Active Question:<br><br>" +
 		"Question Type: <select id='ques-selector'>" +
   "<option value='0'>--select--</option>" + 
   "<option value='1'>MCQ-Radio</option>" + 
@@ -14,32 +11,93 @@ function addQuestion(){
   "<option value='6'>MCQ-Checkbox-Image</option>" + 
   "</select>" +
   "<br><br>";
-	$ques.html($quesNew);
+
+function submitForm(){
+	// extract all questions
+	// redirect to user home
+};
+
+function addOption(type){
+	$("#add-opt-btn").attr("disabled", true);
+	switch(type){
+		case 1:
+		case 2:
+		case 3:
+			$("#ques-opt-active").html("<input id='opt-text' type='text' class='form-control'/><br>");
+			break;
+		case 5:
+		case 6:
+			$("#ques-opt-active").html("<input id='opt-text' type='text' class='form-control'/><input type='file' accept='image/png, image/jpeg'>");
+			break;
+		default:
+			break;
+	}
+	$("#ques-opt-foot").html("<input type='button' class='btn btn-primary' onclick='freezeOption("+ type 
+		+")' value='Freeze this Option'><br><br>");
+};
+
+function freezeOption(type){
+	$("#add-opt-btn").removeAttr("disabled");
+	$("#ques-opt-foot").html("");
+	$("#ques-opt-active").html("");
+	switch(type){
+		case 1:
+		case 2:
+		case 3:
+			$("#ques-opt-done").html($("#ques-opt-done").html() + $("#opt-text").val());
+			break;
+		case 5:
+		case 6:
+			$("#ques-opt-done").html($("#ques-opt-done").html() + $("#opt-text").val() + $("#opt-img").val());
+			break;
+		default:
+			break;
+	}
+}
+
+function addQuestion(){
+	count++;
+
+	$("#ques-type").html($quesNew);
 	$("body").on("change","#ques-selector",function(){
   	 	setQuestionType($("#ques-selector").val());
 	});
 	$("#add-ques-btn").attr("disabled", true);
 };
 
+function clearOptions(){
+	$("#ques-opt-active").html("");
+	$("#ques-opt-done").html("");
+	$("#ques-opt-foot").html("");
+}
+
+function clearQuestions(){
+	$("#ques-type").html("");
+	$("#ques-text").html("");
+	$("#ques-foot").html("");
+};
+
+
 function setQuestionType(type){
-	$ques = $("#ques-active-cont");
+	$("#ques-foot").html("<input type='button' class='btn btn-primary' onclick='freezeQuestion("+ type 
+		+")' value='Freeze this Question'><br><br>");
+	$("#ques-selector").val(type);
+	clearOptions();
 	switch(type){
 		case '0': 
-			$ques.html($ques.html() + "");
+			$("#ques-text").html("");
+			$("#ques-foot").html("");
 			break;
 		case '1':
 		case '2':
 		case '3':
-			$ques.html($ques.html() + "Question Text <input id='ques-text' type='text' class='form-control'/><br>"+
-			"Semicolon separated Options <input id='ques-options' type='text' class='form-control'><br>" +
-			"<input type='button' class='btn btn-primary' onclick='freezeQuestion("+ type +")' value='Freeze this Question'><br><br>");
+		case '5':
+		case '6':
+			$("#ques-text").html("Question Text <input id='ques-text' type='text' class='form-control'/><br>");
+			$("#ques-foot").html("<input id='add-opt-btn' type='button' class='btn btn-success' onclick='addOption(" + type + ")'' value='Add Option'/><br>"+ $("#ques-foot").html());
 			break;
 		case '4':
-			$ques.html($ques.html() + "Question Text <input id='ques-text' type='text' class='form-control'/><br>"+
-			"<input type='button' class='btn btn-primary' onclick='freezeQuestion("+ type +")' value='Freeze this Question'><br><br>");
-			break;
-		case '5':
-
+			$("#ques-text").html("Question Text <input id='ques-text' type='text' class='form-control'/><br>");
 			break;
 		default:
 			break;
@@ -47,23 +105,24 @@ function setQuestionType(type){
 };
 
 function freezeQuestion(type){
-	$ques = $("#ques-done-cont");
-	var $quesNew = "";
 	switch(type){
 		case 1:
 		case 2:
 		case 3:
-			$quesNew = "Question " + count + ": " + document.getElementById("ques-text").value +
-			"<br> Options: " + document.getElementById("ques-options").value + "<br><br>";
+			$("#ques-done").html($("#ques-done").html() + "Question " + count + ": " + document.getElementById("ques-text").value +
+			"<br> Options: " + document.getElementById("ques-opt").value + "<br><br>");
 			break;
 		case 4:
-			$quesNew = "Question " + count + ": " + document.getElementById("ques-text").value +
-			"<br><br>";
+			$("#ques-done").html($("#ques-done").html() + "Question " + count + ": " + document.getElementById("ques-text").value +
+			"<br><br>");
+			break;
+		case 5:
+		case 6:
 			break;
 		default:
 			break;
 	}
-	$("#ques-active-cont").html("");
-	$ques.html($ques.html() + $quesNew);	
+	clearOptions();
+	clearQuestions();
 	$("#add-ques-btn").removeAttr("disabled");
 };
