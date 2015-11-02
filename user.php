@@ -70,6 +70,13 @@ class User{
 		echo "</table>";
 	}
 
+	public function getUser($userID){
+		$query = pg_prepare($this->db, "display_user$userID", 'SELECT * FROM users WHERE user_id = $1') ;
+		$result = pg_execute($this->db, "display_user$userID", array($userID));
+		$row = pg_fetch_row($result);
+		return array($row[0], $row[2], $row[3]);
+	}
+
 
 }
 ?>

@@ -1,6 +1,6 @@
 create table users
 	(
-		user_id char(9) primary key,
+		user_id varchar(9) primary key,
 		password varchar(30) not null,
 		name varchar(30) not null,
 		department varchar(30) not null,
@@ -11,6 +11,7 @@ create table users
 create table form
 	(
 		form_id char(10) primary key,
+		form_name varchar(30),
 		start_time timestamp,
 		end_time timestamp,
 		anonymity char(1) check (anonymity in ('0','1'))
