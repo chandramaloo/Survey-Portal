@@ -5,8 +5,13 @@
   
 </head>
 <body>
-<form name = "form" action="confirmUser.php" method="post" class="form-horizontal" onsubmit="return validateForm()">
-Form Name: &nbsp; &nbsp;<input type="text" name="form_name" id = 'form_name'>
+<div class="panel panel-info" style="border-radius: 15px">
+  <div class = "panel-heading" style = "padding-left:5px;margin-top:-20px;">
+      <h3>Form Details</h3>
+  </div>
+<div class="panel-body">
+<form name = "form" action="confirmUser.php" method="post" class="form-group" onsubmit="return validateForm()">
+Form Name: &nbsp; &nbsp;<input type="text" name="form_name" id = 'form_name' placeholder = "Enter your form name">
 <br><br>
 
 <?php
@@ -20,19 +25,18 @@ $user = new User();
 $user->tabulateAllUsers();
 ?>
 
-<br>
 Anonymity: 
 <input type="radio" name="anonymity" value="yes" checked="true">Yes
 <input type="radio" name="anonymity" value="no">No	
 
 <br><br>
 
-Start Date: &nbsp; &nbsp;<input type="text" name="Start Date" value="<?php echo date('Y-m-d H:m:s'); ?>" /><br><br>
-End Date: &nbsp; &nbsp;<input type="text" name="End Date" value="<?php echo date('Y-m-d H:m:s'); ?>" />
+Start Date: &nbsp; &nbsp;<input type="text" name="Start Date" value="<?php echo date('Y-m-d H:m:s'); ?>" />&nbsp; &nbsp; &nbsp; &nbsp; End Date: &nbsp; &nbsp;<input type="text" name="End Date" value="<?php echo date('Y-m-d H:m:s'); ?>" />
 
 <br><br>
 
 <input type="submit" id = "submit" value = "Confirm Selection"/><br />
+
 </form>
 <script type="text/javascript">
 	function validateForm() {
@@ -95,7 +99,8 @@ End Date: &nbsp; &nbsp;<input type="text" name="End Date" value="<?php echo date
   alert(<?php echo $_SESSION['login_user']; ?>);
 }
 </script>
-
+</div>
+</div>
 <div id="ques-done">
   </div>
   <div id="ques-active">
