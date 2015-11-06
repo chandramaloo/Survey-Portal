@@ -12,17 +12,57 @@
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL); 
+	session_start();
+
+	$host = "host=localhost";
+	$dbname = "dbname=dbAppln";
+	$credentials = "user=admin password=db";
+	$db = pg_connect("$host $dbname $credentials");
+
+	$user_id=$_SESSION['login_user'];
+	$form_id = $_GET['form_id'];	
+	$flag = '0';
+
+	$result = pg_prepare($db, "form_data", 'SELECT anonymity, form_name FROM form WHERE form_id=$1');
+	$result = pg_execute($db, "form_data", array($form_id));
+	$row = pg_fetch_row($result);
+	$count = pg_num_rows($result);
+	if($count!=1){
+			header("Location: welcome.php");
+	}
+
+	$anonymity = $row[0];
+	$formName = $row[1];
+
+	$result = pg_prepare($db, "user_status", 'SELECT * FROM role WHERE form_id=$1 and user_id=$2 and privilege=$3 and status=$4');
+	$result = pg_execute($db, "user_status", array($form_id, $user_id,$flag, $flag));
+	$row = pg_fetch_row($result);
+	$count = pg_num_rows($result);
+	if($count!=1){
+			header("Location: welcome.php");
+	}
+	
+	$result = pg_prepare($db, "render", 'SELECT type, is_compulsory, content, extra_content FROM survey_questions WHERE form_id=$1');
+	$result = pg_execute($db, "render", array($form_id));
+	
+	$quesArr = [];
+	$compArr = [];
+	$typeArr = [];
+	$optArr = [];
+
+	while($row = pg_fetch_row($result){
+		array_push($typeArr, $row[0]);
+		array_push($compArr, $row[1]);
+		array_push($quesArr, $row[2]);
+		$options = explode("\",\"", substr($row[3],1,-1));
+		array_push($optArr, $options);
+	}
 
 
-
-
-	$formName = "Sample Form";
-	$quesArr = ['q1','Q2','Q3','q4'];
-	$compArr = ['1','1','1','1'];
-	$typeArr = ['1','2','3','4'];
-	$optArr = [['O11','O12','O13'],['O21','O22','O23'],['o31','o32'],[]];
-
+	
 	$str = "<h1>".$formName."</h1>";
+	if($anonymity=="0") $str = $str."<h4>Your responses will NOT BE anonymous<h4>";
+	else $str = $str."<h4>Your responses will be Anonymous<h4>";
 	for($i = 0; $i < sizeof($quesArr); $i++){
 		$str = $str."Question ".($i+1).":<br>".$quesArr[$i]."<br>";
 		$tmp = "";
