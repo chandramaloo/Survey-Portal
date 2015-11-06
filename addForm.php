@@ -35,70 +35,6 @@ Start Date: &nbsp; &nbsp;<input type="text" name="Start Date" value="<?php echo 
 
 <br><br>
 
-<input type="submit" id = "submit" value = "Confirm Selection"/><br />
-
-</form>
-<script type="text/javascript">
-	function validateForm() {
-    var x = document.forms["form"]["form_name"].value;
-    if (x == null || x == "") {
-        alert("Name must be filled out");
-        return false;
-    }
-
-	var eligible_count = document.querySelectorAll('input[type="checkbox"]:checked').length;
-  if(eligible_count == 0) {
-  	alert("Please select atleast one user to participate in the form");
-  	return false;
-  }
-
-  var startDate = document.forms["form"]["Start Date"].value;
-  var date_pattern = /....-..-.. ..:..:../g;
-  var result = date_pattern.test(startDate);
-  if (result == false){
-    alert("Enter the Start Date in YYYY-MM-DD HH:mm:ss format");
-    return false;
-  }
-
-  var endDate = document.forms["form"]["End Date"].value;
-  var date_pattern = /....-..-.. ..:..:../g;
-  var result = date_pattern.test(endDate);
-  if (result == false){
-    alert("Enter the End Date in YYYY-MM-DD HH:mm:ss format" + endDate);
-    return false;
-  }
-  
-  var today = new Date();
-  
-  var stTimestamp = Date.parse(startDate);
-  if (isNaN(stTimestamp)==false)
-  {
-    var start = new Date(startDate);
-    if(start <= today){
-      alert("The survey start date should be after the current time");
-      return false;
-    }
-    var endTimestamp = Date.parse(endDate);
-    if (isNaN(endTimestamp)==false)
-    {
-      var end = new Date(endDate);
-      if(start >= end){
-        alert("The survey end date should be after the start date");
-        return false;
-      }
-    }
-    else{
-      alert ("The end date is invalid.")
-      return false;
-    }
-  }
-  else{
-    alert ("The start date is invalid.")
-    return false;
-  }
-  alert(<?php echo $_SESSION['login_user']; ?>);
-}
-</script>
 </div>
 </div>
 <div id="ques-done">
@@ -136,9 +72,14 @@ Start Date: &nbsp; &nbsp;<input type="text" name="Start Date" value="<?php echo 
   </div>
   <input id='add-ques-btn' type="button" class='btn btn-success' onclick="addQuestion()" value="Add Question"/>
   <input id='done-btn' type="button" class='btn btn-success' onclick="submitForm()" value="Done"/>
-  <script type="text/javascript">
-    clearOptions();
-    clearQuestions();
-  </script>
+  <input type = "hidden" name = "questions" id = "questions"/> 
+  <input type = "hidden" name = "optionArray" id = "optionArray"/> 
+  <input type = "hidden" name = "question_types" id = "question_types"/> 
+<input type="submit" id = "submit" value = "Confirm Selection"/><br />
+</form> 
+<script type="text/javascript">
+  clearOptions();
+  clearQuestions();
+</script>
 
 </body>

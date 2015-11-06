@@ -5,8 +5,71 @@ var typeArr = [];
 var optArr = [];
 var tempOptArr = [];
 
+function validateForm() {
+    var x = document.forms["form"]["form_name"].value;
+    if (x == null || x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+
+  var eligible_count = document.querySelectorAll('input[type="checkbox"]:checked').length;
+  if(eligible_count == 0) {
+    alert("Please select atleast one user to participate in the form");
+    return false;
+  }
+
+  var startDate = document.forms["form"]["Start Date"].value;
+  var date_pattern = /....-..-.. ..:..:../g;
+  var result = date_pattern.test(startDate);
+  if (result == false){
+    alert("Enter the Start Date in YYYY-MM-DD HH:mm:ss format");
+    return false;
+  }
+
+  var endDate = document.forms["form"]["End Date"].value;
+  var date_pattern = /....-..-.. ..:..:../g;
+  var result = date_pattern.test(endDate);
+  if (result == false){
+    alert("Enter the End Date in YYYY-MM-DD HH:mm:ss format" + endDate);
+    return false;
+  }
+  
+  var today = new Date();
+  
+  var stTimestamp = Date.parse(startDate);
+  if (isNaN(stTimestamp)==false)
+  {
+    var start = new Date(startDate);
+    if(start <= today){
+      alert("The survey start date should be after the current time");
+      return false;
+    }
+    var endTimestamp = Date.parse(endDate);
+    if (isNaN(endTimestamp)==false)
+    {
+      var end = new Date(endDate);
+      if(start >= end){
+        alert("The survey end date should be after the start date");
+        return false;
+      }
+    }
+    else{
+      alert ("The end date is invalid.")
+      return false;
+    }
+  }
+  else{
+    alert ("The start date is invalid.")
+    return false;
+  }
+  $("#questions").val(quesArr);
+  $("#optionArray").val(optArr);
+  $("#question_types	").val(typeArr);
+
+};
+
 function submitForm(){
-	
+	window.location.href= "addForm.php?questions="+quesArr+"&type="+typeArr+"&optArr="+optArr;
 };
 
 function addOption(){
@@ -59,6 +122,7 @@ function clearOptions(){
 function clearQuestions(){
 	$("#ques-type").hide();
 	$("#ques-text").val("");
+	$("#ques-selector").val("0");
 	$("#ques-text").hide();
 	$("#ques-foot").hide();
 };

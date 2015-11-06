@@ -29,6 +29,11 @@ for($i = 0; $i < $selected_users; $i++) {
 
 }
 echo "</table>";
+echo $_POST['questions'];
+echo "<br>";
+echo $_POST['question_types'];
+echo "<br>";
+echo $_POST['optionArray'];
 ?>
 <form action="addQuestions.php" method="post" class = "form-inline">
 <input type = "submit" value = "Proceed to Add Questions" name = "submit">
