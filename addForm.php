@@ -137,8 +137,8 @@ Start Date: &nbsp; &nbsp;<input type="text" name="Start Date" value="<?php echo 
   <input id='add-ques-btn' type="button" class='btn btn-success' onclick="addQuestion()" value="Add Question"/>
   <input id='done-btn' type="button" class='btn btn-success' onclick="submitForm()" value="Done"/>
   <script type="text/javascript">
-    clearOptions();
-    clearQuestions();
+    //clearOptions();
+    //clearQuestions();
   </script>
 
 </body>
