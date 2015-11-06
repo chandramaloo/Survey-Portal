@@ -12,6 +12,10 @@ class User{
 		$this->db = pg_connect("$host $dbname $credentials");
 	}
 	
+	function __destruct() {
+    	pg_close($this->db);
+   }
+
 	public function validateUser($user, $passwd){
 		$result = pg_prepare($this->db, "login", 'SELECT user_id FROM users WHERE user_id=$1 and password=$2');
 		$result = pg_execute($this->db, "login", array($user, $passwd));
