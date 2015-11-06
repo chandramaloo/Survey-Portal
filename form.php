@@ -4,10 +4,15 @@
 	<script type="text/javascript" src="jquery.js"></script>
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 	<title>Create Survey</title>
+	<style type="text/css">
+	h1{
+		text-align: center;
+	}
+
+	</style>
 </head>
 <body style="margin:20px;">
-	<div id="main-cont">
-		<form id='main-form' action='submit.php' method="POST">
+	<div id="main-cont" class="panel panel-info">
 	<?php
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
@@ -30,6 +35,8 @@
 	if($count!=1){
 			header("Location: welcome.php");
 	}
+	
+	$_SESSION['submitted_form']=$form_id;
 
 	$anonymity = $row[0];
 	$formName = $row[1];
@@ -50,7 +57,7 @@
 	$typeArr = [];
 	$optArr = [];
 
-	while($row = pg_fetch_row($result){
+	while($row = pg_fetch_row($result)){
 		array_push($typeArr, $row[0]);
 		array_push($compArr, $row[1]);
 		array_push($quesArr, $row[2]);
@@ -58,30 +65,30 @@
 		array_push($optArr, $options);
 	}
 
-
-	
-	$str = "<h1>".$formName."</h1>";
-	if($anonymity=="0") $str = $str."<h4>Your responses will NOT BE anonymous<h4>";
-	else $str = $str."<h4>Your responses will be Anonymous<h4>";
+	$str = "<div class =\"panel-heading\" style=\"padding-top=0px;\"><h1>".$formName."</h1></div>";
+	$str = $str."<div class = \"panel-body\">";
+	if($anonymity=="0") $str = $str."<h6>Your responses will NOT BE anonymous<h4>";
+	else $str = $str."<h6>Your responses will be Anonymous<h4>";
+	$str = $str."<form id='main-form' action='submit.php' method=\"POST\">";
 	for($i = 0; $i < sizeof($quesArr); $i++){
-		$str = $str."Question ".($i+1).":<br>".$quesArr[$i]."<br>";
+		$str = $str."Question ".($i+1).": ".$quesArr[$i];
 		$tmp = "";
 		if($compArr[$i]=='1') $tmp = " required";
   		switch($typeArr[$i]){
-			case '1': $str = $str."Options:<ul>";
+			case '1': $str = $str."<br><ul style=\"list-style-type: none;\">";
 				for($j=0; $j<sizeof($optArr[$i]); $j++){
   					$str = $str."<li><input type='radio' name='inp-".($i+1)."' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
   				}
   				$str = $str."</ul>";
 				break;
-			case '2': $str = $str."Options: <select ".$tmp.">";
+			case '2': $str = $str."&nbsp;&nbsp;<select ".$tmp.">";
   					$str = $str."<option name='inp-".($i+1)."' value=''>--select one--</option>";
   				for($j=0; $j<sizeof($optArr[$i]); $j++){
   					$str = $str."<option name='inp-".($i+1)."' value='".$j."'>".$optArr[$i][$j]."</option>";
   				}
   				$str = $str."</select>";
 				break;
-			case '3': $str = $str."Options:<ul>";
+			case '3': $str = $str."<br><ul style=\"list-style-type: none;\">";
   				for($j=0; $j<sizeof($optArr[$i]); $j++){
   					$str = $str."<li><input type='checkbox' name='inp-".($i+1)."' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
   				}
@@ -100,7 +107,7 @@
 				    </script>";
   				break;
 			case '4':
-  					$str = $str."<input type='text' id='inp-".($i+1)."' class='form-control'".$tmp.">";
+  					$str = $str."<br><input type='text' id='inp-".($i+1)."' class='form-control'".$tmp.">";
 				break;
 			case '5':
 				break;
@@ -111,8 +118,9 @@
 		}
 		$str = $str."<br><br>";
 	}
-	$str= $str."<input type='submit' class='btn btn-success' value='Complete Survey'>";
+	$str= $str."<input type='submit' class='btn btn-success' value='Complete Survey'></div>";
 	echo $str;
+	
 	?>		
 		</form>
 	</div>

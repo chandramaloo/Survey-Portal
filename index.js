@@ -68,6 +68,7 @@ function validateForm() {
   $("#questions").val(window.JSON.stringify(quesArr));
   $("#optionArray").val(window.JSON.stringify(optArr));
   $("#question_types").val(window.JSON.stringify(typeArr));
+  $("#compulsory").val(window.JSON.stringify(compArr));
 
 };
 

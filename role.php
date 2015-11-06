@@ -75,7 +75,7 @@ class Role{
 				if($row[3] == 1){
 					$anonymity = "Yes";
 				}
-				echo "<tr> <td>$row[4] <td> $row[1] <td> $row[2] <td> $anonymity <td> Fill your responses now </tr>";
+				echo "<tr> <td>$row[4] <td> $row[1] <td> $row[2] <td> $anonymity <td> <a href=\"form.php?form_id=$row[0]\"> Fill your responses now </a> </tr>";
 			}
 		}
 

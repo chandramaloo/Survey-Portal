@@ -76,6 +76,7 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
   <input type = "hidden" name = "questions" id = "questions"/> 
   <input type = "hidden" name = "optionArray" id = "optionArray"/> 
   <input type = "hidden" name = "question_types" id = "question_types"/> 
+  <input type = "hidden" name = "compulsory" id = "compulsory"/> 
 <input type="submit" id = "submit" value = "Confirm Selection"/><br />
 </form> 
 <script type="text/javascript">
