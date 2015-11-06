@@ -151,14 +151,14 @@ function setQuestionType(){
 function freezeQuestion(){
 	quesArr.push($("#ques-text").val());
 	if($("#ques-comp-inp").is(":checked"))
-		compArr.push(1);
-	else compArr.push(0);
+		compArr.push('1');
+	else compArr.push('0');
 	typeArr.push(type);
 	optArr.push(tempOptArr);
 	var str = "Submitted Questions<br>";
 	for(var i = 0; i < quesArr.length; i++){
 		str += "Question " + (i+1) + ": " + quesArr[i] + "<br>";
-		if(compArr[i] == 1) str += "*required<br>";
+		if(compArr[i] == '1') str += "*required<br>";
 		if(optArr[i].length != 0){
 			str += "Options:<br><ul>";
 			for(var opt in optArr[i]){

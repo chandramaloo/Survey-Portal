@@ -13,9 +13,12 @@
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL); 
 
+
+
+
 	$formName = "Sample Form";
 	$quesArr = ['q1','Q2','Q3','q4'];
-	$compArr = [1,1,1,1];
+	$compArr = ['1','1','1','1'];
 	$typeArr = ['1','2','3','4'];
 	$optArr = [['O11','O12','O13'],['O21','O22','O23'],['o31','o32'],[]];
 
@@ -23,7 +26,7 @@
 	for($i = 0; $i < sizeof($quesArr); $i++){
 		$str = $str."Question ".($i+1).":<br>".$quesArr[$i]."<br>";
 		$tmp = "";
-		if($compArr[$i]==1) $tmp = " required";
+		if($compArr[$i]=='1') $tmp = " required";
   		switch($typeArr[$i]){
 			case '1': $str = $str."Options:<ul>";
 				for($j=0; $j<sizeof($optArr[$i]); $j++){
