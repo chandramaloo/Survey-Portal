@@ -10,8 +10,8 @@
       <h3>Form Details</h3>
   </div>
 <div class="panel-body">
-<form name = "form" action="confirmUser.php" method="post" class="form-group" onsubmit="return validateForm()">
-Form Name: &nbsp; &nbsp;<input type="text" name="form_name" id = 'form_name' placeholder = "Enter your form name">
+<form name = "form" action="FormAdd.php" method="post" class="form-group" onsubmit="return validateForm()">
+Form Name: &nbsp; &nbsp;<input type="text" name="form_name" id = "form_name" placeholder = "Enter your form name">
 <br><br>
 
 <?php
@@ -26,12 +26,12 @@ $user->tabulateAllUsers();
 ?>
 
 Anonymity: 
-<input type="radio" name="anonymity" value="yes" checked="true">Yes
-<input type="radio" name="anonymity" value="no">No	
+<input type="radio" name="anonymity" value='1' checked="true">Yes
+<input type="radio" name="anonymity" value='0'>No	
 
 <br><br>
 
-Start Date: &nbsp; &nbsp;<input type="text" name="Start Date" value="<?php echo date('Y-m-d H:m:s'); ?>" />&nbsp; &nbsp; &nbsp; &nbsp; End Date: &nbsp; &nbsp;<input type="text" name="End Date" value="<?php echo date('Y-m-d H:m:s'); ?>" />
+Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" value="<?php echo date('Y-m-d H:m:s'); ?>" />&nbsp; &nbsp; &nbsp; &nbsp; End Date: &nbsp; &nbsp;<input type="text" name="end_date" id = "end_date" value="<?php echo date('Y-m-d H:m:s'); ?>" />
 
 <br><br>
 

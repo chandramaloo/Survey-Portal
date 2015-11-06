@@ -18,7 +18,7 @@ function validateForm() {
     return false;
   }
 
-  var startDate = document.forms["form"]["Start Date"].value;
+  var startDate = document.forms["form"]["start_date"].value;
   var date_pattern = /....-..-.. ..:..:../g;
   var result = date_pattern.test(startDate);
   if (result == false){
@@ -26,7 +26,7 @@ function validateForm() {
     return false;
   }
 
-  var endDate = document.forms["form"]["End Date"].value;
+  var endDate = document.forms["form"]["end_date"].value;
   var date_pattern = /....-..-.. ..:..:../g;
   var result = date_pattern.test(endDate);
   if (result == false){
@@ -62,14 +62,16 @@ function validateForm() {
     alert ("The start date is invalid.")
     return false;
   }
-  $("#questions").val(quesArr);
-  $("#optionArray").val(optArr);
-  $("#question_types	").val(typeArr);
+  console.log(optArr);
+ 
+  $("#questions").val(window.JSON.stringify(quesArr));
+  $("#optionArray").val(window.JSON.stringify(optArr));
+  $("#question_types").val(window.JSON.stringify(typeArr));
 
 };
 
 function submitForm(){
-	window.location.href= "addForm.php?questions="+quesArr+"&type="+typeArr+"&optArr="+optArr;
+	//window.location.href= "addForm.php?questions="+window.JSON.stringify(quesArr)+"&type="+window.JSON.stringify(typeArr)+"&optArr="+window.JSON.stringify(optArr);
 };
 
 function addOption(){

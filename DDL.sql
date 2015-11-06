@@ -37,7 +37,7 @@ create table survey_questions
 		default_answer varchar(20),
 		is_compulsory char(1),
 		content varchar(1000),
-		extra_content bytea,
+		extra_content varchar(1000),
 		primary key (form_id,question_id),
 		foreign key (form_id) references form(form_id));
 
