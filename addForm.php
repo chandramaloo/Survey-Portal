@@ -55,6 +55,7 @@ Start Date: &nbsp; &nbsp;<input type="text" name="Start Date" value="<?php echo 
     </div>
     <div id="ques-text-cont">
       <input id='ques-text' type='text' class='form-control' placeholder='Question Text'/><br>
+      <span id='ques-comp'><input id='ques-comp-inp' type='checkbox'/>Required*<br></span>
     </div>
     <div id="ques-opt">
       <div id="ques-opt-done">
