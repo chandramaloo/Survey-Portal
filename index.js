@@ -1,6 +1,7 @@
 var count = 0;
 var type;
 var quesArr = [];
+var compArr = [];
 var typeArr = [];
 var optArr = [];
 var tempOptArr = [];
@@ -71,7 +72,6 @@ function validateForm() {
 };
 
 function submitForm(){
-	//window.location.href= "addForm.php?questions="+window.JSON.stringify(quesArr)+"&type="+window.JSON.stringify(typeArr)+"&optArr="+window.JSON.stringify(optArr);
 };
 
 function addOption(){
@@ -124,8 +124,10 @@ function clearOptions(){
 function clearQuestions(){
 	$("#ques-type").hide();
 	$("#ques-text").val("");
+	$("#ques-comp-inp").attr('checked', false);
 	$("#ques-selector").val("0");
 	$("#ques-text").hide();
+	$("#ques-comp").hide();
 	$("#ques-foot").hide();
 };
 
@@ -134,22 +136,29 @@ function setQuestionType(){
 	$("#ques-foot").show();
 	clearOptions();
 	$("#ques-text").show();
+	$("#ques-comp").show();
 	$("#opt-add").show();
 	if(type=='4') $("#opt-add").hide();
 	if(type=='0'){
 		$("#ques-text").val("");
+		$("#ques-comp-inp").attr('checked', false);
 		$("#ques-text").hide();
+		$("#ques-comp").hide();
 		$("#ques-foot").hide();		
 	}			
 };
 
 function freezeQuestion(){
 	quesArr.push($("#ques-text").val());
+	if($("#ques-comp-inp").is(":checked"))
+		compArr.push(1);
+	else compArr.push(0);
 	typeArr.push(type);
 	optArr.push(tempOptArr);
 	var str = "Submitted Questions<br>";
 	for(var i = 0; i < quesArr.length; i++){
 		str += "Question " + (i+1) + ": " + quesArr[i] + "<br>";
+		if(compArr[i] == 1) str += "*required<br>";
 		if(optArr[i].length != 0){
 			str += "Options:<br><ul>";
 			for(var opt in optArr[i]){
