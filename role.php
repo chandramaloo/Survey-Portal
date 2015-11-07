@@ -16,6 +16,25 @@ class Role{
     	pg_close($this->db);
    }
 
+   	public function validateUser($user, $form){
+		$flag = '0';
+   		$result = pg_prepare($this->db, "get_user", 'SELECT * FROM role WHERE form_id=$1 and user_id=$2 and privilege=$3 and status=$4');
+   		$result = pg_execute($this->db, "get_user", array($form, $user, $flag, $flag));
+   		$row = pg_fetch_row($result);
+   		$count = pg_num_rows($result);
+   		if($count == 1){
+   				return 1;
+   		}
+   		return 0;
+   	}
+
+   	public function updateStatus($user, $form){
+		$flag = '0';
+   		$result = pg_prepare($this->db, "update_user_status", 'UPDATE role SET status = \'1\' where user_id = $1 and form_id = $2 and privilege = \'0\'');
+   		$result = pg_execute($this->db, "update_user_status", array($user, $form));
+   	}
+
+
    	public function adminForms($user){
    		$query = pg_prepare($this->db, "my_forms", 'SELECT form_id from role where user_id = $1 and privilege = \'1\'');
 		$result = pg_execute($this->db, "my_forms", array($user));
@@ -55,6 +74,7 @@ class Role{
 		$result = pg_execute($this->db, "awaiting_forms", array($user));
 		$count = 0;
 		$first = 0;
+		$curr_date = new DateTime('Now');
 		while($row = pg_fetch_row($result)){
 			$query = pg_prepare($this->db, "getForm$row[0]", 'SELECT * from form where form_id = $1');
 			$result1 = pg_execute($this->db, "getForm$row[0]", array($row[0]));
@@ -63,9 +83,9 @@ class Role{
 			$form_end = $row[2];
 			$startDate = new DateTime($form_start);
 			$endDate = new DateTime($form_end);
-			$curr_date = new DateTime('Now');
 			if($startDate < $curr_date && $endDate > $curr_date){
 				if($first == 0){
+					echo "first";
 					echo "<table class=\"table\">";
 					echo "<tr><th>Form Name <th> Start Time <th> End Time <th> Anonymity <th></tr>";
 					$first++;
@@ -81,7 +101,6 @@ class Role{
 
 		$query = pg_prepare($this->db, "filled_forms", 'SELECT form_id from role where user_id = $1 and privilege = \'0\' and status = \'1\'');
 		$result = pg_execute($this->db, "filled_forms", array($user));
-		$count = $count + pg_num_rows($result);
 		while($row = pg_fetch_row($result)){
 			$query = pg_prepare($this->db, "getForm$row[0]", 'SELECT * from form where form_id = $1');
 			$result1 = pg_execute($this->db, "getForm$row[0]", array($row[0]));
