@@ -25,8 +25,7 @@ create table role
 		status char(1) check (status in ('0','1')),
 		primary key (form_id,user_id,privilege),
 		foreign key (form_id) references form(form_id),
-		foreign key (user_id) references users(user_id),
-		constraint privilege_status check ((privilege ='1' and status = '0') or privilege = '0')
+		foreign key (user_id) references users(user_id)
 		);
 
 create table survey_questions
