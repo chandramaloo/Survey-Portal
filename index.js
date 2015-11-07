@@ -7,7 +7,7 @@ var optArr = [];
 var tempOptArr = [];
 
 function validateForm() {
-    var x = document.forms["form"]["form_name"].value;
+    /*var x = document.forms["form"]["form_name"].value;
     if (x == null || x == "") {
         alert("Name must be filled out");
         return false;
@@ -68,7 +68,9 @@ function validateForm() {
   $("#questions").val(window.JSON.stringify(quesArr));
   $("#optionArray").val(window.JSON.stringify(optArr));
   $("#question_types").val(window.JSON.stringify(typeArr));
-  $("#compulsory").val(window.JSON.stringify(compArr));
+  $("#compulsory").val(window.JSON.stringify(compArr));*/
+
+  window.location = "welcome.php";
 };
 
 function submitForm(){
@@ -84,6 +86,10 @@ function addOption(){
 };
 
 function freezeOption(){
+	if($("#opt-text").val()==""){
+		alert("Option Text cannot be empty");
+		return;
+	}
 	if(type=="5" || type=="6"){
 		$("#img-id").val($("#time").val() + quesArr.length + tempOptArr.length);
 		$.ajax({
@@ -166,6 +172,10 @@ function setQuestionType(){
 };
 
 function freezeQuestion(){
+	if($("#ques-text").val()==""){
+		alert("Question Text cannot be empty");
+		return;
+	}
 	quesArr.push($("#ques-text").val());
 	if($("#ques-comp-inp").is(":checked"))
 		compArr.push('1');
