@@ -7,7 +7,7 @@ var optArr = [];
 var tempOptArr = [];
 
 function validateForm() {
-    /*var x = document.forms["form"]["form_name"].value;
+    var x = document.forms["form"]["form_name"].value;
     if (x == null || x == "") {
         alert("Name must be filled out");
         return false;
@@ -68,9 +68,8 @@ function validateForm() {
   $("#questions").val(window.JSON.stringify(quesArr));
   $("#optionArray").val(window.JSON.stringify(optArr));
   $("#question_types").val(window.JSON.stringify(typeArr));
-  $("#compulsory").val(window.JSON.stringify(compArr));*/
+  $("#compulsory").val(window.JSON.stringify(compArr));
 
-  window.location = "welcome.php";
 };
 
 function submitForm(){
