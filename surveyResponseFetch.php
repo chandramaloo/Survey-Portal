@@ -207,10 +207,10 @@ class SurveyResponse{
 
    }	//end of class
 
- //$form_id = $_GET['form_id'];
- //echo "$form_id heelo";
+ $form_id = $_GET['form_id'];
+ // echo "$form_id heelo";
  $response = new SurveyResponse();
- $response->fetchResponse('1234567890');
- $response->form_statistics('1234567890');
+ $response->fetchResponse($form_id);
+ $response->form_statistics($form_id);
 
 ?>
