@@ -25,10 +25,10 @@ insert into role values ('1234567892','130050015','0','0');
 insert into role values ('1234567893','130050009','0','0');
 insert into role values ('1234567893','130050004','1','0');
 
-insert into survey_questions values ('1234567890','0000000001','0','default_ans0','1','how you doin?');
-insert into survey_questions values ('1234567890','0000000002','1','default_ans1','1','abc?');
-insert into survey_questions values ('1234567890','0000000003','2','default_ans0','0','who?');
-insert into survey_questions values ('1234567890','0000000004','2','default_ans0','0','who?');
+insert into survey_questions values ('1234567890','0000000001','4','default_ans0','1','how you doin?');
+insert into survey_questions values ('1234567890','0000000002','1','default_ans1','1','abc?','"a","b","c","d","e"');
+insert into survey_questions values ('1234567890','0000000003','2','default_ans0','0','who?','"a","b","c","d","e"');
+insert into survey_questions values ('1234567890','0000000004','3','default_ans0','0','who?','"a","b","c","d","e"');
 insert into survey_questions values ('1234567891','0000000001','2','default_ans2','0','how?');
 insert into survey_questions values ('1234567891','0000000002','3','default_ans3','0','what?');
 insert into survey_questions values ('1234567893','0000000001','4','default_ans4','1','when?');
@@ -38,7 +38,7 @@ insert into survey_questions values ('1234567893','0000000003','6','default_ans6
 insert into survey_responses values ('1234567890','0000000001','130050004','0');
 insert into survey_responses values ('1234567890','0000000002','130050004','1');
 insert into survey_responses values ('1234567890','0000000003','130050004','1');
-insert into survey_responses values ('1234567890','0000000004','130050004','1');
+insert into survey_responses values ('1234567890','0000000004','130050004','1,2,3');
 
 insert into survey_responses values ('1234567890','0000000001','130050009','0');
 insert into survey_responses values ('1234567890','0000000002','130050009','0');
@@ -48,7 +48,7 @@ insert into survey_responses values ('1234567890','0000000004','130050009','2');
 insert into survey_responses values ('1234567890','0000000001','130050015','2');
 insert into survey_responses values ('1234567890','0000000002','130050015','1');
 insert into survey_responses values ('1234567890','0000000003','130050015','1');
-insert into survey_responses values ('1234567890','0000000004','130050015','1');
+insert into survey_responses values ('1234567890','0000000004','130050015','2,4');
 
 insert into survey_responses values ('1234567891','0000000001','130050009','i m okay');
 insert into survey_responses values ('1234567891','0000000002','130050009','i m okay');
