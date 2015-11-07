@@ -79,10 +79,25 @@ function addOption(){
 	$("#opt-freeze").show();
 	$("#opt-add").attr("disabled", true);
 	$("#opt-text").show();
-	if(type=="6") $("#opt-img").show();
+	if(type=="6" || type=="5"){
+		$("#opt-img").show();	
+	}
 };
 
 function freezeOption(){
+	if(type=="5" || type=="6"){
+		$("#img-id").val($("#time").val() + quesArr.length + optArr.length);
+		$.ajax({
+		    type: "POST",
+		    url: "insert_image.php",
+		    data: new FormData($('[name="form"]')[0]),
+		    processData: false,
+		    contentType: false,
+		    success: function (data) {
+		        alert(data);
+		    }
+		});	
+	}
 	tempOptArr.push($("#opt-text").val());
 	$("#opt-add").removeAttr("disabled");
 	var str = "";
@@ -139,7 +154,9 @@ function setQuestionType(){
 	$("#ques-text").show();
 	$("#ques-comp").show();
 	$("#opt-add").show();
-	if(type=='4') $("#opt-add").hide();
+	if(type=='4'){
+		$("#opt-add").hide();
+	}
 	if(type=='0'){
 		$("#ques-text").val("");
 		$("#ques-comp-inp").attr('checked', false);
