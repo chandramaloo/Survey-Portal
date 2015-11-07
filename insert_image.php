@@ -12,7 +12,7 @@ $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die ("Could not connect to server\n");
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-	$id = $_POST['img-id'];
+	$id = $_SESSSION['login_user'].$_POST['img-id'];
 	$data=file_get_contents($_FILES['opt-image']['tmp_name']);
 	echo "Success";
 	$es_data = bin2hex($data);

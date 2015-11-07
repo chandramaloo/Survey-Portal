@@ -113,8 +113,8 @@
 
   					$res = pg_query("SELECT encode(data, 'base64') AS data FROM images WHERE id='".$form_id.$i.$j."'"); 
 					$raw = pg_fetch_result($res, 'data');
-				 	header('Content-type: image/jpeg');
-					$str = $str.base64_decode($raw);
+				// 	header('Content-type: image/jpeg');
+				//	$str = $str.base64_decode($raw);
   				}
   				$str = $str."</ul>";
 				break;
@@ -124,8 +124,8 @@
 
   					$res = pg_query("SELECT encode(data, 'base64') AS data FROM images WHERE id='".$form_id.$i.$j."'"); 
 					$raw = pg_fetch_result($res, 'data');
-				 	header('Content-type: image/jpeg');
-					$str = $str.base64_decode($raw);
+				 //	header('Content-type: image/jpeg');
+				//	$str = $str.base64_decode($raw);*/
   				}
   				$str = $str."</ul>";
 				$str = $str."

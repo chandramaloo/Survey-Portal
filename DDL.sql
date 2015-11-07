@@ -50,6 +50,11 @@ create table survey_responses
 		foreign key (form_id,question_id) references survey_questions,
 		foreign key (user_id) references users(user_id));
 
+create table images
+	(
+		id varchar(20) primary key,
+		data bytea
+		);
 
 -- create table classroom
 -- 	(building		varchar(15),

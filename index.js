@@ -127,6 +127,7 @@ function addQuestion(){
 
 function clearOptions(){
 	tempOptArr = [];
+	$("#opt-add").removeAttr("disabled");
 	$("#ques-opt-done").html("");
 	$("#opt-text").val("");
 	$("#opt-img").val("");
