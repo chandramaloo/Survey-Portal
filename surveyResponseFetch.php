@@ -131,10 +131,10 @@ class SurveyResponse{
 	   	$query = pg_prepare($this->db, "response", 'select * from survey_responses where form_id = $1 and question_id = $2');
 	   	$query = pg_prepare($this->db, "num_response", 'Select * from survey_responses where form_id = $1');
 	   	$num_response = pg_execute($this->db, "num_response", array($form_id));
-	   	$num_response = pg_num_rows($num_response);
+	   	$num = pg_num_rows($num_response);
 
-	   	if($num_response == 0){
-	   		echo "no response statistics to display."
+	   	if($num == 0){
+	   		echo "no response statistics to display.";
 	   	}
 	   	else{
 	   		while($row = pg_fetch_row($questions)){
