@@ -177,6 +177,10 @@ function freezeQuestion(){
 		alert("Question Text cannot be empty");
 		return;
 	}
+	if(type!='4' && tempOptArr.length==0){
+		alert("At least one option should be there");
+		return;
+	}
 	quesArr.push($("#ques-text").val());
 	if($("#ques-comp-inp").is(":checked"))
 		compArr.push('1');
