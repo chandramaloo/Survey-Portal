@@ -85,7 +85,6 @@ class Role{
 			$endDate = new DateTime($form_end);
 			if($startDate < $curr_date && $endDate > $curr_date){
 				if($first == 0){
-					echo "first";
 					echo "<table class=\"table\">";
 					echo "<tr><th>Form Name <th> Start Time <th> End Time <th> Anonymity <th></tr>";
 					$first++;
