@@ -109,9 +109,39 @@
 			case '4':
   					$str = $str."<br><input type='text' id='inp-".($i+1)."' class='form-control'".$tmp.">";
 				break;
-			case '5':
+			case '5': $str = $str."<br><ul style=\"list-style-type: none;\">";
+				for($j=0; $j<sizeof($optArr[$i]); $j++){
+  					$str = $str."<li><input type='radio' name='inp-".($i+1)."' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
+
+  					$res = pg_query("SELECT encode(data, 'base64') AS data FROM images WHERE id='".$form_id.$i.$j."'"); 
+					$raw = pg_fetch_result($res, 'data');
+				 	header('Content-type: image/jpeg');
+					$str = $str.base64_decode($raw);
+  				}
+  				$str = $str."</ul>";
 				break;
-			case '6':
+			case '6': $str = $str."<br><ul style=\"list-style-type: none;\">";
+  				for($j=0; $j<sizeof($optArr[$i]); $j++){
+  					$str = $str."<li><input type='checkbox' name='inp-".($i+1)."' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
+
+  					$res = pg_query("SELECT encode(data, 'base64') AS data FROM images WHERE id='".$form_id.$i.$j."'"); 
+					$raw = pg_fetch_result($res, 'data');
+				 	header('Content-type: image/jpeg');
+					$str = $str.base64_decode($raw);
+  				}
+  				$str = $str."</ul>";
+				$str = $str."
+  					<script type='text/javascript'>
+					    var requiredCheckboxes = $(\"[name='inp-".($i+1)."']\");
+					    requiredCheckboxes.change(function(){
+					        if(requiredCheckboxes.is(':checked')) {
+					            requiredCheckboxes.removeAttr('required');
+					        }
+						    else {
+				            	requiredCheckboxes.attr('required', 'required');
+				        	}
+				    	});
+				    </script>";
 				break;
 			default:
 				break;

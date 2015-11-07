@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 include('lock.php');
 
 $user_id = $_SESSION['login_user'];
-$form_id = $user_id.time();
+$form_id = $user_id.$_POST['time'];
 $form_name = $_POST['form_name'];
 $start_date = $_POST['start_date'];
 $end_date = $_POST['end_date'];

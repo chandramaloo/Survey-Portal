@@ -86,7 +86,7 @@ function addOption(){
 
 function freezeOption(){
 	if(type=="5" || type=="6"){
-		$("#img-id").val($("#time").val() + quesArr.length + optArr.length);
+		$("#img-id").val($("#time").val() + quesArr.length + tempOptArr.length);
 		$.ajax({
 		    type: "POST",
 		    url: "insert_image.php",
