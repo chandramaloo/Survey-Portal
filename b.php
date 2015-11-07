@@ -1,13 +1,5 @@
 <?php 
 
-$host = "localhost"; 
-$user = "admin"; 
-$pass = "db"; 
-$db = "dbAppln"; 
-
-$con = pg_connect("host=$host dbname=$db user=$user password=$pass")
-    or die ("Could not connect to server\n");
-
 //$file_name = "twitter-logo-small.jpg";
 
 // $img = fopen($file_name, 'r') or die("cannot read image\n");
@@ -30,14 +22,13 @@ $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
 // $query = "INSERT INTO images(id, data) Values('6', decode('{$es_data}' , 'hex'))";
 // pg_query($con, $query); 
 
-  $res = pg_query("SELECT encode(data, 'base64') AS data FROM images WHERE id='144686264000'"); 
-  $raw = pg_fetch_result($res, 'data');
- 
+   $aExtraInfo = getimagesize($_FILES['image']['tmp_name']);  
+    $sImage = "data:" . $aExtraInfo["mime"] . ";base64," . base64_encode(file_get_contents($_FILES['image']['tmp_name']));
+    echo '<p>The image has been uploaded successfully</p><p>Preview:</p><img src="' . $sImage . '" alt="Your Image" />';
   // Convert to binary and send to the browser
-  header('Content-type: image/jpeg');
-  echo base64_decode($raw);
-
-pg_close($con); 
+  include('a.php');
+  header("Content-type: text/html");
+  
 
 ?>
 

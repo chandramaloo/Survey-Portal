@@ -69,6 +69,7 @@ function validateForm() {
   $("#optionArray").val(window.JSON.stringify(optArr));
   $("#question_types").val(window.JSON.stringify(typeArr));
   $("#compulsory").val(window.JSON.stringify(compArr));
+
 };
 
 function submitForm(){
@@ -84,6 +85,10 @@ function addOption(){
 };
 
 function freezeOption(){
+	if($("#opt-text").val()==""){
+		alert("Option Text cannot be empty");
+		return;
+	}
 	if(type=="5" || type=="6"){
 		$("#img-id").val($("#time").val() + quesArr.length + tempOptArr.length);
 		$.ajax({
@@ -101,7 +106,7 @@ function freezeOption(){
 	$("#opt-add").removeAttr("disabled");
 	var str = "";
 	if(tempOptArr.length != 0){
-		str += "Options:<br><ul>";
+		str += "Options:<ul>";
 		for(var opt in tempOptArr){
 			str += "<li>" + tempOptArr[opt] + "</li>";
 		}
@@ -167,18 +172,26 @@ function setQuestionType(){
 };
 
 function freezeQuestion(){
+	if($("#ques-text").val()==""){
+		alert("Question Text cannot be empty");
+		return;
+	}
+	if(type!='4' && tempOptArr.length==0){
+		alert("At least one option should be there");
+		return;
+	}
 	quesArr.push($("#ques-text").val());
 	if($("#ques-comp-inp").is(":checked"))
 		compArr.push('1');
 	else compArr.push('0');
 	typeArr.push(type);
 	optArr.push(tempOptArr);
-	var str = "Submitted Questions<br>";
+	var str = "<b>Submitted Questions:</b><br>";
 	for(var i = 0; i < quesArr.length; i++){
 		str += "Question " + (i+1) + ": " + quesArr[i] + "<br>";
 		if(compArr[i] == '1') str += "*required<br>";
 		if(optArr[i].length != 0){
-			str += "Options:<br><ul>";
+			str += "Options:<ul>";
 			for(var opt in optArr[i]){
 				str += "<li>" + optArr[i][opt] + "</li>";
 			}
