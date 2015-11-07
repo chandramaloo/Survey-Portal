@@ -48,7 +48,7 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
 </div>
   <div id="ques-active">
     <div id="ques-type">
-      Active Question:<br><br>
+      <b>Active Question:</b><br>
       Question Type: <select id='ques-selector'>
       <option value='0'>--select--</option>
       <option value='1'>MCQ-Radio</option>
@@ -69,7 +69,7 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
       <div id="ques-opt-done">
       </div>
       <div id="ques-opt-active">
-        <input type='text' id='opt-text' class='form-control'/><br>
+        <input type='text' id='opt-text' class='form-control' placeholder='Option Text'/><br>
         <input type='file' id='opt-img' name='opt-image' accept='image/png, image/jpeg'/>
         <input type='button' id="opt-freeze" class='btn btn-primary' onclick='freezeOption()' value='Freeze this Option'><br><br>
       </div>
@@ -94,4 +94,6 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
 </div>
  &nbsp; <input type="submit" class="btn btn-success" id = "submit" value = "Submit Form" style="text-align:center;"/>
 </form> 
+<br>
+<br>
 </body>
