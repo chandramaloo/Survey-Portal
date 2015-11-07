@@ -58,7 +58,7 @@ class Role{
 				if($row[3] == 1){
 					$anonymity = "Yes";
 				}
-				echo "<tr> <td>$row[4] <td> $row[1] <td> $row[2] <td> $anonymity <td> Check Survey Responses </tr>";
+				echo "<tr> <td>$row[4] <td> $row[1] <td> $row[2] <td> $anonymity <td><a href=\"surveyResponseFetch.php?form_id=$row[0]\"> Check your responses now </a> </tr>";
 			}
 		}
 		if($first != 0){
