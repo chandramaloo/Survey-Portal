@@ -31,7 +31,7 @@ create table role
 create table survey_questions
 	(
 		form_id varchar(45),
-		question_id numeric(4),
+		question_id varchar(20),
 		type char(1),
 		default_answer varchar(20),
 		is_compulsory char(1),
@@ -43,7 +43,7 @@ create table survey_questions
 create table survey_responses
 	(
 		form_id varchar(45),
-		question_id numeric(4),
+		question_id varchar(20),
 		user_id varchar(20),
 		response varchar(1000),
 		primary key (form_id,question_id,user_id),

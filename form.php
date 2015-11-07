@@ -47,13 +47,14 @@
 		header("Location: welcome.php");
 	}
 	
-	$result = pg_prepare($db, "render", 'SELECT type, is_compulsory, content, extra_content FROM survey_questions WHERE form_id=$1');
+	$result = pg_prepare($db, "render", 'SELECT type, is_compulsory, content, extra_content, question_id FROM survey_questions WHERE form_id=$1');
 	$result = pg_execute($db, "render", array($form_id));
 	
 	$quesArr = [];
 	$compArr = [];
 	$typeArr = [];
 	$optArr = [];
+	$quesID = [];
 
 	while($row = pg_fetch_row($result)){
 		array_push($typeArr, $row[0]);
@@ -61,7 +62,9 @@
 		array_push($quesArr, $row[2]);
 		$options = explode("\",\"", substr($row[3],1,-1));
 		array_push($optArr, $options);
+		array_push($quesID, $row[4]);
 	}
+	
 
 	$str = "<div class =\"panel-heading\" style=\"padding-top=0px;\"><h1>".$formName."</h1></div>";
 	$str = $str."<div class = \"panel-body\">";
@@ -109,6 +112,7 @@
 			case '4':
   					$str = $str."<br><input type='text' name='inp-".($i+1)."' class='form-control'".$tmp.">";
 				break;
+	/* 	
 			case '5': $str = $str."<br><ul style=\"list-style-type: none;\">";
 				for($j=0; $j<sizeof($optArr[$i]); $j++){
   					$str = $str."<li><input type='radio' name='inp-".($i+1)."' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
@@ -122,17 +126,17 @@
 				break;
 			case '6': $str = $str."<br><ul style=\"list-style-type: none;\">";
   				for($j=0; $j<sizeof($optArr[$i]); $j++){
-  					$str = $str."<li><input type='checkbox' name='inp-".($i+1)."' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
+  					$str = $str."<li><input type='checkbox' name='inp-".($i+1)."[]' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
 
   					$res = pg_query("SELECT encode(data, 'base64') AS data FROM images WHERE id='".$form_id.$i.$j."'"); 
 					$raw = pg_fetch_result($res, 'data');
 				 //	header('Content-type: image/jpeg');
-				//	$str = $str.base64_decode($raw);*/
+				//	$str = $str.base64_decode($raw);
   				}
   				$str = $str."</ul>";
 				$str = $str."
   					<script type='text/javascript'>
-					    var requiredCheckboxes = $(\"[name='inp-".($i+1)."']\");
+					    var requiredCheckboxes = $(\"[name='inp-".($i+1)."[]']\");
 					    requiredCheckboxes.change(function(){
 					        if(requiredCheckboxes.is(':checked')) {
 					            requiredCheckboxes.removeAttr('required');
@@ -145,6 +149,7 @@
 				break;
 			default:
 				break;
+				*/
 		}
 		$str = $str."<br><br>";
 	}

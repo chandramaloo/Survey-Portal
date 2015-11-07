@@ -8,7 +8,6 @@ insert into users values ('130050004','kunal','kunal','cse','2017','kunalagrawal
 insert into users values ('130050009','chandra','chandra','cse','2017','maloochandra@gmail.com');
 insert into users values ('130050015','parth','parth','cse','2017','1995.parthshah@gmail.com');
 
-<<<<<<< HEAD
 insert into form values ('1234567890','2015-10-20 09:00:00','2015-10-25 09:00:00','1','abc');
 insert into form values ('1234567891','2015-10-20 09:00:00','2015-11-25 09:00:00','0','def');
 insert into form values ('1234567892','2015-08-20 09:00:00','2015-08-25 09:00:00','0','ghi');
@@ -58,8 +57,6 @@ insert into survey_responses values ('1234567893','0000000002','130050015','i m 
 insert into survey_responses values ('1234567893','0000000003','130050015','i m okay');
 
 
-=======
->>>>>>> 16159da5fcde7c0cea141003a7d53931d9c07145
 
 
 -- delete from prereq;

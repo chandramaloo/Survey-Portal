@@ -1,8 +1,8 @@
 <?php
-/*ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-*/
+
 class SurveyResponse{
 	private $db;
 	
@@ -35,7 +35,7 @@ class SurveyResponse{
 
    		// //printing table
    		if($num_responses==0){
-   			echo "You have no responses yet.";
+   			echo "You have no responses yet. <br>";
    		}
    		else{
 			echo "<table class=\"table\">";
@@ -64,57 +64,76 @@ class SurveyResponse{
 	   			if($anonymity=='0'){
 	   				echo "<td> $row[2]";
 	   			}
-	   			if($type[0] == 1 || $type[0] == 2 || $type[0] == 5){
-		   			$row_int = (int)$row[3];
-		   			$temp = $options[0];
-		   			echo "<td> $temp[$row_int]";
+	   			if($type[0] == '1' || $type[0] == '2' || $type[0] == '5'){
+	   				if($row[3] != ""){
+			   			$row_int = (int)$row[3];
+			   			$temp = $options[0];
+			   			echo "<td> $temp[$row_int]";
+			   		}
+			   		else {
+			   			echo "<td> ";
+			   		}
 		   		}
-		   		else if ($type[0] == 4){
+		   		else if ($type[0] == '4'){
 		   			echo "<td> $row[3]";
 		   		}
-		   		else if ($type[0] == 3 || $type[0] == 6){
-		   			$choices = explode(",", $row[3]);
-		   			$output="";
-		   			if(sizeof($choices) != 0){
-		   				$row_int = (int)$choices[0];
-		   				$temp = $options[0];
-		   				$output .= $temp[$row_int];
-
-		   				for($k=1; $k<sizeof($choices);$k++){
-			   				$row_int = (int)$choices[$k];
+		   		else if ($type[0] == '3' || $type[0] == '6'){
+		   			if($row[3] != ""){
+			   			$choices = explode(",", $row[3]);
+			   			$output="";
+			   			if(sizeof($choices) != 0){
+			   				$row_int = (int)$choices[0];
 			   				$temp = $options[0];
-			   				$output .= ", ".$temp[$row_int];
+			   				$output .= $temp[$row_int];
+
+			   				for($k=1; $k<sizeof($choices);$k++){
+				   				$row_int = (int)$choices[$k];
+				   				$temp = $options[0];
+				   				$output .= ", ".$temp[$row_int];
+			   				}
+			   			echo "<td> $output";
 		   				}
-		   			echo "<td> $output";
-	   				}
+		   			}
+		   			else {
+		   				echo "<td> ";
+		   			}
 	   			
 	   			}
 	   			for($i=1;$i<$num_questions;$i++){
 	   				$row = pg_fetch_row($result);
 	   				if($type[$i] == 1 || $type[$i] == 2 || $type[$i] == 5){
-			   			$row_int = (int)$row[3];
-			   			$temp = $options[$i];
-			   			echo "<td> $temp[$row_int]";
+	   					if($row[3] != ""){
+				   			$row_int = (int)$row[3];
+				   			$temp = $options[$i];
+				   			echo "<td> $temp[$row_int]";
+				   		}
+				   		else{
+				   			echo "<td>";
+				   		}
 			   		}
 			   		else if ($type[$i] == 4){
 			   			echo "<td> $row[3]";
 			   		}
 			   		else if ($type[$i] == 3 || $type[$i] == 6){
-			   			$choices = explode(",", $row[3]);
-			   			$output="";
-			   			if(sizeof($choices) != 0){
-			   				$row_int = (int)$choices[0];
-			   				$temp = $options[$i];
-			   				$output .= $temp[$row_int];
-
-			   				for($k=1; $k<sizeof($choices);$k++){
-				   				$row_int = (int)$choices[$k];
+			   			if($row[3] != ""){
+				   			$choices = explode(",", $row[3]);
+				   			$output="";
+				   			if(sizeof($choices) != 0){
+				   				$row_int = (int)$choices[0];
 				   				$temp = $options[$i];
-				   				$output .= ", ".$temp[$row_int];
+				   				$output .= $temp[$row_int];
+
+				   				for($k=1; $k<sizeof($choices);$k++){
+					   				$row_int = (int)$choices[$k];
+					   				$temp = $options[$i];
+					   				$output .= ", ".$temp[$row_int];
+				   				}
+				   			echo "<td> $output";
 			   				}
-			   			echo "<td> $output";
-		   				}
-		   			
+			   			}
+			   			else {
+			   				echo "<td> ";
+			   			}
 		   			}
 	   			}
 	   			echo "</tr>";
@@ -135,7 +154,7 @@ class SurveyResponse{
 	   	$num = pg_num_rows($num_response);
 
 	   	if($num == 0){
-	   		echo "no response statistics to display.";
+	   		echo "We have no response statistics to display. <br>";
 	   	}
 	   	else{
 	   		while($row = pg_fetch_row($questions)){
@@ -166,11 +185,13 @@ class SurveyResponse{
 	   					$freq[$i] = 0;
 	   				}
 	   				while($mcq_row = pg_fetch_row($mcq)){
-	   					$mcq_response = explode(",",$mcq_row[3]);
-	   					for($k = 0; $k<sizeof($mcq_response); $k++){
-	   						$row_int = (int)$mcq_response[$k];
-	   						$freq[$row_int]++;
-	   					}
+	   					if($mcq_row[3] != ""){
+		   					$mcq_response = explode(",",$mcq_row[3]);
+		   					for($k = 0; $k<sizeof($mcq_response); $k++){
+		   						$row_int = (int)$mcq_response[$k];
+		   						$freq[$row_int]++;
+		   					}
+		   				}
 	   				}
 	   				echo "<table class=\"table\">";
 	   				echo "<tr> <th> Response <th> Frequency <th> Percentage";
@@ -187,7 +208,7 @@ class SurveyResponse{
    }	//end of class
 
  $form_id = $_GET['form_id'];
- echo "$form_id heelo";
+ // echo "$form_id heelo";
  $response = new SurveyResponse();
  $response->fetchResponse($form_id);
  $response->form_statistics($form_id);
