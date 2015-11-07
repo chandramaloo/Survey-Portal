@@ -72,11 +72,13 @@
 	else $str = $str."<h6>Your responses will be Anonymous<h4>";
 	$str = $str."<form id='main-form' action='submit.php' method=\"POST\">";
 	for($i = 0; $i < sizeof($quesArr); $i++){
-		if($compArr[$i]=='1'){
-			$tmp = " required";	
-		}
-  		$str = $str."Question ".($i+1).": ".$quesArr[$i];
 		$tmp = "";
+		$star = "";
+		if($compArr[$i]=='1'){
+			$tmp = " required";
+			$star = "<span style='color:#800000'>*</span>";
+		}
+  		$str = $str."Question ".($i+1).$star.": ".$quesArr[$i];
 		switch($typeArr[$i]){
 			case '1': $str = $str."<br><ul style=\"list-style-type: none;\">";
 				for($j=0; $j<sizeof($optArr[$i]); $j++){
@@ -96,18 +98,19 @@
   					$str = $str."<li><input type='checkbox' name='inp-".($i+1)."[]' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
   				}
   				$str = $str."</ul>";
-				$str = $str."
-  					<script type='text/javascript'>
-					    var requiredCheckboxes = $(\"[name='inp-".($i+1)."[]']\");
-					    requiredCheckboxes.change(function(){
-					        if(requiredCheckboxes.is(':checked')) {
-					            requiredCheckboxes.removeAttr('required');
-					        }
-						    else {
-				            	requiredCheckboxes.attr('required', 'required');
-				        	}
-				    	});
-				    </script>";
+  				if($compArr[$i]=='1')
+					$str = $str."
+  						<script type='text/javascript'>
+					    	var requiredCheckboxes = $(\"[name='inp-".($i+1)."[]']\");
+					    	requiredCheckboxes.change(function(){
+					        	if(requiredCheckboxes.is(':checked')) {
+					            	requiredCheckboxes.removeAttr('required');
+					        	}	
+							    else {
+					            	requiredCheckboxes.attr('required', 'required');
+					        	}
+					    	});
+				    	</script>";
   				break;
 			case '4':
   					$str = $str."<br><input type='text' name='inp-".($i+1)."' class='form-control'".$tmp.">";
