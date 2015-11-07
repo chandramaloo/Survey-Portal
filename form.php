@@ -69,10 +69,12 @@
 	else $str = $str."<h6>Your responses will be Anonymous<h4>";
 	$str = $str."<form id='main-form' action='submit.php' method=\"POST\">";
 	for($i = 0; $i < sizeof($quesArr); $i++){
-		$str = $str."Question ".($i+1).": ".$quesArr[$i];
+		if($compArr[$i]=='1'){
+			$tmp = " required";	
+		}
+  		$str = $str."Question ".($i+1).": ".$quesArr[$i];
 		$tmp = "";
-		if($compArr[$i]=='1') $tmp = " required";
-  		switch($typeArr[$i]){
+		switch($typeArr[$i]){
 			case '1': $str = $str."<br><ul style=\"list-style-type: none;\">";
 				for($j=0; $j<sizeof($optArr[$i]); $j++){
   					$str = $str."<li><input type='radio' name='inp-".($i+1)."' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";

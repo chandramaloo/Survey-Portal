@@ -201,6 +201,7 @@ function freezeQuestion(){
 		str += "<br>";
 	}
 	$("#ques-done").html(str);
+	
 	clearOptions();
 	clearQuestions();
 	$("#add-ques-btn").removeAttr("disabled");
