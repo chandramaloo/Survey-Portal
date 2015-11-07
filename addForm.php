@@ -10,7 +10,7 @@
       <h3>Form Details</h3>
   </div>
 <div class="panel-body">
-<form name = "form" action="FormAdd.php" method="post" class="form-group" onsubmit="return validateForm()">
+<form name = "form" action="FormAdd.php" method="post" enctype="multipart/form-data" class="form-group" onsubmit="return validateForm()">
 Form Name: &nbsp; &nbsp;<input type="text" name="form_name" id = "form_name" placeholder = "Enter your form name">
 <br><br>
 
@@ -23,6 +23,7 @@ include('user.php');
 $user_id = $_SESSION['login_user'];
 $user = new User();
 $user->tabulateAllUsers();
+$time = time();
 ?>
 
 Anonymity: 
@@ -62,7 +63,7 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
       </div>
       <div id="ques-opt-active">
         <input type='text' id='opt-text' class='form-control'/><br>
-        <input type='file' id='opt-img' accept='image/png, image/jpeg'>
+        <input type='file' id='opt-img' name='opt-image' accept='image/png, image/jpeg'/>
         <input type='button' id="opt-freeze" class='btn btn-primary' onclick='freezeOption()' value='Freeze this Option'><br><br>
         <input type='button' id='opt-add' class='btn btn-success' onclick='addOption()' value='Add Option'/><br>
       </div>
@@ -73,6 +74,8 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
   </div>
   <input id='add-ques-btn' type="button" class='btn btn-success' onclick="addQuestion()" value="Add Question"/>
   <input id='done-btn' type="button" class='btn btn-success' onclick="submitForm()" value="Done"/>
+  <input type = "hidden" name = "time" id = "time" value=<?php echo '"'.$time.'"'?>/> 
+  <input type = "hidden" name = "img-id" id = "img-id"/> 
   <input type = "hidden" name = "questions" id = "questions"/> 
   <input type = "hidden" name = "optionArray" id = "optionArray"/> 
   <input type = "hidden" name = "question_types" id = "question_types"/> 
