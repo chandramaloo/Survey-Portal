@@ -5,7 +5,7 @@
   
 </head>
 <body>
-<div class="panel panel-success" style="border-radius: 15px">
+<div class="panel panel-primary" style="border-radius: 15px">
   <div class = "panel-heading" style = "padding-left:5px;margin-top:-20px;text-align:center;">
       <h3 style = "margin-bottom:5px;">Form Details</h3>
   </div>
@@ -39,7 +39,7 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
 </div>
 </div>
 
-<div class = "panel panel-info">
+<div class = "panel panel-primary">
 <div class = "panel-heading" style = "padding-top:5px;text-align:center;">
     <h3 style = "margin-top:0px;margin-bottom:5px;">Survey Questions</h3>
 </div>
@@ -86,13 +86,12 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
   <input type = "hidden" name = "optionArray" id = "optionArray"/> 
   <input type = "hidden" name = "question_types" id = "question_types"/> 
   <input type = "hidden" name = "compulsory" id = "compulsory"/> 
-  <input type="submit" id = "submit" value = "Confirm Selection"/>
-  <button type="button" class="btn btn-success" onclick="validateForm()" >SUBMIT FORM</button> <br><br>
-</form> 
 <script type="text/javascript">
   clearOptions();
   clearQuestions();
 </script>
 </div>
 </div>
+ &nbsp; <input type="submit" class="btn btn-success" id = "submit" value = "Submit Form" style="text-align:center;"/>
+</form> 
 </body>

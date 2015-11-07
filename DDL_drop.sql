@@ -1,3 +1,4 @@
+drop table images;
 drop table survey_responses;
 drop table survey_questions;
 drop table role;
