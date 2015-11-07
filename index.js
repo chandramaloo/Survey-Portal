@@ -107,7 +107,7 @@ function freezeOption(){
 	$("#opt-add").removeAttr("disabled");
 	var str = "";
 	if(tempOptArr.length != 0){
-		str += "Options:<br><ul>";
+		str += "Options:<ul>";
 		for(var opt in tempOptArr){
 			str += "<li>" + tempOptArr[opt] + "</li>";
 		}
@@ -187,12 +187,12 @@ function freezeQuestion(){
 	else compArr.push('0');
 	typeArr.push(type);
 	optArr.push(tempOptArr);
-	var str = "Submitted Questions<br>";
+	var str = "<b>Submitted Questions:</b><br>";
 	for(var i = 0; i < quesArr.length; i++){
 		str += "Question " + (i+1) + ": " + quesArr[i] + "<br>";
 		if(compArr[i] == '1') str += "*required<br>";
 		if(optArr[i].length != 0){
-			str += "Options:<br><ul>";
+			str += "Options:<ul>";
 			for(var opt in optArr[i]){
 				str += "<li>" + optArr[i][opt] + "</li>";
 			}

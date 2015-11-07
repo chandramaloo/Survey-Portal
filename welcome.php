@@ -13,7 +13,7 @@ include('role.php');
 $curr_user = $_SESSION['login_user'];
 ?>
 
-<body>
+<body style="margin:0px">
 <div class = "panel panel-primary">
 	<div class = "panel-heading">
 		<h2 style ="margin-top: -5px;" >Welcome 
