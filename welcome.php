@@ -34,13 +34,14 @@ $curr_user = $_SESSION['login_user'];
 			<div class = "panel-heading"> <h4 style="margin-top:1px; margin-left:-5px;margin-bottom:5px"> Forms For You To Fill: </h4></div>
 
 			<?php
-				$role = new Role();
 				$role->currentForms($curr_user);
 			?>
 		</div>
 
 	</div>
-<button type="button" class="btn btn-info" onclick="location.href = 'addForm.php';" >Host a New Survey</button> 
-<button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';" >LOGOUT</button> <br><br>
+	<div class = "panel-body">
+		<button type="button" class="btn btn-info" onclick="location.href = 'addForm.php';" >Host a New Survey</button> 
+		<button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';" >LOGOUT</button> <br><br>
+	</div>
 </div>
 </body>

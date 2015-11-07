@@ -62,7 +62,6 @@ for ($i=0; $i < $num_questions; $i++) {
   	$result = pg_execute($db, "add$question_id", array($form_id, $question_id, $ques_type, NULL, $ques_compulsory, $ques_content, $ques_options));
 }
 pg_close($db);
+header("Location: welcome.php");
 ?>
-<form action="addQuestions.php" method="post" class = "form-inline">
-<input type = "submit" value = "Proceed to Add Questions" name = "submit">
 </form> 
