@@ -129,53 +129,61 @@ class SurveyResponse{
    		$questions = pg_execute($this->db, "questions1", array($form_id));
 	   	$query = pg_prepare($this->db, "aggregation", 'select count(*) as freq from survey_responses where form_id = $1 and question_id = $2 and response = $3');
 	   	$query = pg_prepare($this->db, "response", 'select * from survey_responses where form_id = $1 and question_id = $2');
+	   	$query = pg_prepare($this->db, "num_response", 'Select * from survey_responses where form_id = $1');
+	   	$num_response = pg_execute($this->db, "num_response", array($form_id));
+	   	$num_response = pg_num_rows($num_response);
 
-   		while($row = pg_fetch_row($questions)){
-   			if($row[2] == '1' || $row[2] == '2' || $row[2] == '5'){
-   				$num = pg_execute($this->db, "response", array($form_id,$row[1]));
-   				$num_responses = pg_num_rows($num);
-   				echo "$row[1] : $row[5]<br>";
-   				//extract each response possible from row[6]
-   				$options = explode("\",\"", substr($row[6],1,-1));
-   				echo "<table class=\"table\">";
-   				echo "<tr> <th> Response <th> Frequency <th> Percentage";
-   				for($i = 0;$i < sizeof($options);$i++){
-   					$result = pg_execute($this->db, "aggregation", array($form_id,$row[1],$i));
-   					$freq_row = pg_fetch_row($result);
-   					$percentage = $freq_row[0]*100/$num_responses;
-   					echo "<tr> <td> $options[$i] <td> $freq_row[0] <td> $percentage </tr>";
-   				}
-   				echo "</table>";
-	   		}
-	   		else if($row[2] == '3' || $row[2] == '6'){
-	   			echo "$row[1] : $row[5]<br>";
-   				//extract each response possible from row[6]
-   				$options = explode("\",\"", substr($row[6],1,-1));
-   				$mcq = pg_execute($this->db, "response", array($form_id,$row[1]));
-   				$num_responses = pg_num_rows($mcq);
-   				$freq = array();
-   				for($i = 0; $i < sizeof($options); $i++){
-   					$freq[$i] = 0;
-   				}
-   				while($mcq_row = pg_fetch_row($mcq)){
-   					$mcq_response = explode(",",$mcq_row[3]);
-   					for($k = 0; $k<sizeof($mcq_response); $k++){
-   						$row_int = (int)$mcq_response[$k];
-   						$freq[$row_int]++;
-   					}
-   				}
-   				echo "<table class=\"table\">";
-   				echo "<tr> <th> Response <th> Frequency <th> Percentage";
-   				for($i = 0;$i < sizeof($options);$i++){
-   					$percentage = $freq[$i]*100/$num_responses;
-   					echo "<tr> <td> $options[$i] <td> $freq[$i] <td> $percentage </tr>";
-   				}
-   				echo "</table>";
-	   		}
-   		}
-   	}
+	   	if($num_response == 0){
+	   		echo "no response statistics to display."
+	   	}
+	   	else{
+	   		while($row = pg_fetch_row($questions)){
+	   			if($row[2] == '1' || $row[2] == '2' || $row[2] == '5'){
+	   				$num = pg_execute($this->db, "response", array($form_id,$row[1]));
+	   				$num_responses = pg_num_rows($num);
+	   				echo "$row[1] : $row[5]<br>";
+	   				//extract each response possible from row[6]
+	   				$options = explode("\",\"", substr($row[6],1,-1));
+	   				echo "<table class=\"table\">";
+	   				echo "<tr> <th> Response <th> Frequency <th> Percentage";
+	   				for($i = 0;$i < sizeof($options);$i++){
+	   					$result = pg_execute($this->db, "aggregation", array($form_id,$row[1],$i));
+	   					$freq_row = pg_fetch_row($result);
+	   					$percentage = $freq_row[0]*100/$num_responses;
+	   					echo "<tr> <td> $options[$i] <td> $freq_row[0] <td> $percentage </tr>";
+	   				}
+	   				echo "</table>";
+		   		}
+		   		else if($row[2] == '3' || $row[2] == '6'){
+		   			echo "$row[1] : $row[5]<br>";
+	   				//extract each response possible from row[6]
+	   				$options = explode("\",\"", substr($row[6],1,-1));
+	   				$mcq = pg_execute($this->db, "response", array($form_id,$row[1]));
+	   				$num_responses = pg_num_rows($mcq);
+	   				$freq = array();
+	   				for($i = 0; $i < sizeof($options); $i++){
+	   					$freq[$i] = 0;
+	   				}
+	   				while($mcq_row = pg_fetch_row($mcq)){
+	   					$mcq_response = explode(",",$mcq_row[3]);
+	   					for($k = 0; $k<sizeof($mcq_response); $k++){
+	   						$row_int = (int)$mcq_response[$k];
+	   						$freq[$row_int]++;
+	   					}
+	   				}
+	   				echo "<table class=\"table\">";
+	   				echo "<tr> <th> Response <th> Frequency <th> Percentage";
+	   				for($i = 0;$i < sizeof($options);$i++){
+	   					$percentage = $freq[$i]*100/$num_responses;
+	   					echo "<tr> <td> $options[$i] <td> $freq[$i] <td> $percentage </tr>";
+	   				}
+	   				echo "</table>";
+		   		}
+	   		}//end of while
+	   	}
+   	}//end of function
 
-   }
+   }	//end of class
 
  $response = new SurveyResponse();
  $response->fetchResponse('1234567890');
