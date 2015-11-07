@@ -54,7 +54,7 @@
 	$compArr = [];
 	$typeArr = [];
 	$optArr = [];
-	$quesID = []
+	$quesID = [];
 
 	while($row = pg_fetch_row($result)){
 		array_push($typeArr, $row[0]);
@@ -64,6 +64,7 @@
 		array_push($optArr, $options);
 		array_push($quesID, $row[4]);
 	}
+	
 
 	$str = "<div class =\"panel-heading\" style=\"padding-top=0px;\"><h1>".$formName."</h1></div>";
 	$str = $str."<div class = \"panel-body\">";
@@ -71,10 +72,14 @@
 	else $str = $str."<h6>Your responses will be Anonymous<h4>";
 	$str = $str."<form id='main-form' action='submit.php' method=\"POST\">";
 	for($i = 0; $i < sizeof($quesArr); $i++){
-		$str = $str."Question ".($i+1).": ".$quesArr[$i];
 		$tmp = "";
-		if($compArr[$i]=='1') $tmp = " required";
-  		switch($typeArr[$i]){
+		$star = "";
+		if($compArr[$i]=='1'){
+			$tmp = " required";
+			$star = "<span style='color:#800000'>*</span>";
+		}
+  		$str = $str."Question ".($i+1).$star.": ".$quesArr[$i];
+		switch($typeArr[$i]){
 			case '1': $str = $str."<br><ul style=\"list-style-type: none;\">";
 				for($j=0; $j<sizeof($optArr[$i]); $j++){
   					$str = $str."<li><input type='radio' name='inp-".($i+1)."' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
@@ -93,22 +98,24 @@
   					$str = $str."<li><input type='checkbox' name='inp-".($i+1)."[]' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
   				}
   				$str = $str."</ul>";
-				$str = $str."
-  					<script type='text/javascript'>
-					    var requiredCheckboxes = $(\"[name='inp-".($i+1)."[]']\");
-					    requiredCheckboxes.change(function(){
-					        if(requiredCheckboxes.is(':checked')) {
-					            requiredCheckboxes.removeAttr('required');
-					        }
-						    else {
-				            	requiredCheckboxes.attr('required', 'required');
-				        	}
-				    	});
-				    </script>";
+  				if($compArr[$i]=='1')
+					$str = $str."
+  						<script type='text/javascript'>
+					    	var requiredCheckboxes = $(\"[name='inp-".($i+1)."[]']\");
+					    	requiredCheckboxes.change(function(){
+					        	if(requiredCheckboxes.is(':checked')) {
+					            	requiredCheckboxes.removeAttr('required');
+					        	}	
+							    else {
+					            	requiredCheckboxes.attr('required', 'required');
+					        	}
+					    	});
+				    	</script>";
   				break;
 			case '4':
   					$str = $str."<br><input type='text' name='inp-".($i+1)."' class='form-control'".$tmp.">";
 				break;
+	/* 	
 			case '5': $str = $str."<br><ul style=\"list-style-type: none;\">";
 				for($j=0; $j<sizeof($optArr[$i]); $j++){
   					$str = $str."<li><input type='radio' name='inp-".($i+1)."' value='".$j."'".$tmp.">".$optArr[$i][$j]."</li>";
@@ -127,7 +134,7 @@
   					$res = pg_query("SELECT encode(data, 'base64') AS data FROM images WHERE id='".$form_id.$i.$j."'"); 
 					$raw = pg_fetch_result($res, 'data');
 				 //	header('Content-type: image/jpeg');
-				//	$str = $str.base64_decode($raw);*/
+				//	$str = $str.base64_decode($raw);
   				}
   				$str = $str."</ul>";
 				$str = $str."
@@ -145,6 +152,7 @@
 				break;
 			default:
 				break;
+				*/
 		}
 		$str = $str."<br><br>";
 	}
