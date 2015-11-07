@@ -120,7 +120,7 @@ class Role{
 				if($row[3] == 1){
 					$anonymity = "Yes";
 				}
-				echo "<tr> <td>$row[4] <td> $row[1] <td> $row[2] <td> $anonymity <td> Your response has been recordes. Thanks for participating </tr>";
+				echo "<tr> <td>$row[4] <td> $row[1] <td> $row[2] <td> $anonymity <td> Your response has been recorded. Thanks for participating </tr>";
 			}
 		}
 		if($count == 0){
@@ -130,5 +130,5 @@ class Role{
 			echo "</table>";
 		}
    	}
- }
+}
 ?>

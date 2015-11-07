@@ -5,13 +5,13 @@
   
 </head>
 <body>
-<div class="panel panel-info" style="border-radius: 15px">
-  <div class = "panel-heading" style = "padding-left:5px;margin-top:-20px;">
-      <h3>Form Details</h3>
+<div class="panel panel-success" style="border-radius: 15px">
+  <div class = "panel-heading" style = "padding-left:5px;margin-top:-20px;text-align:center;">
+      <h3 style = "margin-bottom:5px;">Form Details</h3>
   </div>
 <div class="panel-body">
 <form name = "form" action="FormAdd.php" method="post" enctype="multipart/form-data" class="form-group" onsubmit="return validateForm()">
-Form Name: &nbsp; &nbsp;<input type="text" name="form_name" id = "form_name" placeholder = "Enter your form name">
+Form Name: &nbsp; &nbsp;<input type="text" class = "form-control" name="form_name" id = "form_name" placeholder = "Enter your form name">
 <br><br>
 
 <?php
@@ -38,8 +38,14 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
 
 </div>
 </div>
+
+<div class = "panel panel-info">
+<div class = "panel-heading" style = "padding-top:5px;text-align:center;">
+    <h3 style = "margin-top:0px;margin-bottom:5px;">Survey Questions</h3>
+</div>
+<div class = "panel-body">
 <div id="ques-done">
-  </div>
+</div>
   <div id="ques-active">
     <div id="ques-type">
       Active Question:<br><br>
@@ -52,11 +58,12 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
       <option value='5'>MCQ-Radio-Image</option>
       <option value='6'>MCQ-Checkbox-Image</option>
       </select>
-      <br><br>
+      &nbsp; &nbsp;
+      <span id='ques-comp'><input id='ques-comp-inp' type='checkbox'/>&nbsp; Make it compulsory<br></span>
+      <br>
     </div>
     <div id="ques-text-cont">
       <input id='ques-text' type='text' class='form-control' placeholder='Question Text'/><br>
-      <span id='ques-comp'><input id='ques-comp-inp' type='checkbox'/>Required*<br></span>
     </div>
     <div id="ques-opt">
       <div id="ques-opt-done">
@@ -65,26 +72,27 @@ Start Date: &nbsp; &nbsp;<input type="text" name="start_date" id = "start_date" 
         <input type='text' id='opt-text' class='form-control'/><br>
         <input type='file' id='opt-img' name='opt-image' accept='image/png, image/jpeg'/>
         <input type='button' id="opt-freeze" class='btn btn-primary' onclick='freezeOption()' value='Freeze this Option'><br><br>
-        <input type='button' id='opt-add' class='btn btn-success' onclick='addOption()' value='Add Option'/><br>
       </div>
     </div>
     <div id="ques-foot">
+      <input type='button' id='opt-add' class='btn btn-success' onclick='addOption()' value='Add Option'/>
       <input type='button' class='btn btn-primary' onclick='freezeQuestion()' value='Freeze this Question'><br><br>
     </div>
   </div>
   <input id='add-ques-btn' type="button" class='btn btn-success' onclick="addQuestion()" value="Add Question"/>
-  <input id='done-btn' type="button" class='btn btn-success' onclick="submitForm()" value="Done"/>
   <input type = "hidden" name = "time" id = "time" value=<?php echo '"'.$time.'"'?>/> 
   <input type = "hidden" name = "img-id" id = "img-id"/> 
   <input type = "hidden" name = "questions" id = "questions"/> 
   <input type = "hidden" name = "optionArray" id = "optionArray"/> 
   <input type = "hidden" name = "question_types" id = "question_types"/> 
   <input type = "hidden" name = "compulsory" id = "compulsory"/> 
-<input type="submit" id = "submit" value = "Confirm Selection"/><br />
+  <input type="submit" id = "submit" value = "Confirm Selection"/>
+  <button type="button" class="btn btn-success" onclick="validateForm()" >SUBMIT FORM</button> <br><br>
 </form> 
 <script type="text/javascript">
   clearOptions();
   clearQuestions();
 </script>
-
+</div>
+</div>
 </body>

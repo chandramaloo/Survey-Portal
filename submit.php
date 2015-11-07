@@ -34,18 +34,8 @@ $result = pg_prepare($db, "insert_response", "INSERT into survey_responses value
 for($i = 0; $i < $numQuestions; $i++){
 	$temp = $i+1;
 	switch ($typeArr[$i]) {
-		case '1':
-			$survey_response = '';
-			if(count($_POST['inp-'.$temp] > 0)){
-				$survey_response = $_POST['inp-'.$temp];
-			}
-			$result = pg_execute($db, "insert_response", array($form_id, $i, $user_id, $survey_response));
-			break;
-		case '2':
-			$survey_response = $_POST['inp-'.$temp];
-			$result = pg_execute($db, "insert_response", array($form_id, $i, $user_id, $survey_response));
-			break;
 		case '3':
+		case '6':
 			$survey_response = '';
 			if(count($_POST['inp-'.$temp] > 0)){
 				for($j = 0; $j < count($_POST['inp-'.$temp]); $j++){
@@ -56,7 +46,7 @@ for($i = 0; $i < $numQuestions; $i++){
 			}
 			$result = pg_execute($db, "insert_response", array($form_id, $i, $user_id, $survey_response));
 			break;	
-		case '4':
+		default:
 			$survey_response = $_POST['inp-'.$temp];
 			$result = pg_execute($db, "insert_response", array($form_id, $i, $user_id, $survey_response));
 			break;
