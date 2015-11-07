@@ -1,7 +1,8 @@
 <?php
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+*/
 class SurveyResponse{
 	private $db;
 	
@@ -185,8 +186,10 @@ class SurveyResponse{
 
    }	//end of class
 
+ $form_id = $_GET['form_id'];
+ echo "$form_id heelo";
  $response = new SurveyResponse();
- $response->fetchResponse('1234567890');
- $response->form_statistics('1234567890');
+ $response->fetchResponse($form_id);
+ $response->form_statistics($form_id);
 
 ?>
