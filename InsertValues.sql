@@ -8,6 +8,7 @@ insert into users values ('130050004','kunal','kunal','cse','2017','kunalagrawal
 insert into users values ('130050009','chandra','chandra','cse','2017','maloochandra@gmail.com');
 insert into users values ('130050015','parth','parth','cse','2017','1995.parthshah@gmail.com');
 
+
 -- delete from prereq;
 -- delete from time_slot;
 -- delete from advisor;

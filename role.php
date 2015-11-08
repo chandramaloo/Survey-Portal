@@ -28,6 +28,16 @@ class Role{
    		return 0;
    	}
 
+   	public function insertAdminRole($form_id, $user_id){
+   		$result = pg_prepare($this->db, "admin$user_id", "INSERT into role values($1, $2, $3, $4)");
+		$result = pg_execute($this->db, "admin$user_id", array($form_id, $user_id, '1', '1'));
+   	}
+
+   	public function insertVoterRole($form_id, $user_id){
+   		$result = pg_prepare($this->db, "user$userid", "INSERT into role values($1, $2, $3, $4)");
+  		$result = pg_execute($this->db, "user$userid", array($form_id, $userid, '0', '0'));
+   	}
+
    	public function updateStatus($user, $form){
 		$flag = '0';
    		$result = pg_prepare($this->db, "update_user_status", 'UPDATE role SET status = \'1\' where user_id = $1 and form_id = $2 and privilege = \'0\'');
@@ -48,7 +58,7 @@ class Role{
 			$startDate = new DateTime($form_start);
 			$endDate = new DateTime($form_end);
 			$curr_date = new DateTime('Now');
-		 	if($startDate < $curr_date && $endDate > $curr_date){
+		 	if($startDate < $curr_date){
 				if($first == 0){
 					echo "<table class=\"table\">";
 					echo "<tr><th>Form Name <th> Start Time <th> End Time <th>Anonymity <th></tr>";
@@ -59,6 +69,18 @@ class Role{
 					$anonymity = "Yes";
 				}
 				echo "<tr> <td>$row[4] <td> $row[1] <td> $row[2] <td> $anonymity <td><a href=\"surveyResponseFetch.php?form_id=$row[0]\"> Check your responses now </a> </tr>";
+			}
+			else{
+				if($first == 0){
+					echo "<table class=\"table\">";
+					echo "<tr><th>Form Name <th> Start Time <th> End Time <th>Anonymity <th></tr>";
+					$first++;
+				}
+				$anonymity = "No";
+				if($row[3] == 1){
+					$anonymity = "Yes";
+				}
+				echo "<tr> <td>$row[4] <td> $row[1] <td> $row[2] <td> $anonymity <td> Your Form is yet to start taking responses. </tr>";
 			}
 		}
 		if($first != 0){
@@ -85,7 +107,6 @@ class Role{
 			$endDate = new DateTime($form_end);
 			if($startDate < $curr_date && $endDate > $curr_date){
 				if($first == 0){
-					echo "first";
 					echo "<table class=\"table\">";
 					echo "<tr><th>Form Name <th> Start Time <th> End Time <th> Anonymity <th></tr>";
 					$first++;

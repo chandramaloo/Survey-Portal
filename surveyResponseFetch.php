@@ -4,12 +4,32 @@
 	<title></title>
 	<script type="text/javascript" src="Chart.js"></script>
 	<script type="text/javascript" src="jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<style>
+	td .response {
+		width:100px;
+	}
+
+	</style>
 </head>
 <body>
+<head>
+</head>
+
+<body>
+<div class = "panel panel-primary">
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+include('formClass.php');
+
+$form_id = $_GET['form_id'];
+$form = new Form();
+$chk = $form->checkNoForm($form_id);
+if($chk == 1){
+	header("Location: welcome.php");
+}
 
 class SurveyResponse{
 	private $db;
@@ -26,6 +46,7 @@ class SurveyResponse{
    }
 
    	public function fetchResponse($form_id){
+   		//check user credentials
    		//fetch response corresponding to a form
    		$query = pg_prepare($this->db, "form_response", 'Select * from survey_responses where form_id = $1 order by (user_id,question_id)');
    		$result = pg_execute($this->db, "form_response", array($form_id));
@@ -36,20 +57,23 @@ class SurveyResponse{
    		$questions = pg_execute($this->db, "questions", array($form_id));
    		$num_questions = pg_num_rows($questions);
 
-   		$query = pg_prepare($this->db, "anonymity", 'select anonymity from form where form_id=$1');
+   		$query = pg_prepare($this->db, "anonymity", 'select anonymity, form_name from form where form_id=$1');
    		$anonymity_res = pg_execute($this->db, "anonymity", array($form_id));
    		$row = pg_fetch_row($anonymity_res);
    		$anonymity = $row[0];
-
+   		$form_name = $row[1];
+?>
+	<div class="panel-heading"> <h3> <?php echo $form_name ?> </h3> </div>
+<?php
    		// //printing table
    		if($num_responses==0){
    			echo "You have no responses yet. <br>";
    		}
    		else{
-			echo "<table class=\"table\">";
-			echo "<tr> <th> Response number";
+			echo "<table class=\"table table-hover\">";
+			echo "<tr> <th class = \"response\"> Response number";
 			if($anonymity=='0') {
-				echo "<th> User ID";
+				echo "<th class = \"response\"> User ID";
 			}
 			$options = array();
 			$type = array();
@@ -62,28 +86,28 @@ class SurveyResponse{
 				else{
 					array_push($options,-1);
 				}
-				echo "<th> $row[1]";
+				echo "<th class = \"response\"> $row[1]";
 			}
 			echo "</tr>";
 			$count=1;
 	   		while($row = pg_fetch_row($result)){
 		   		echo "<tr>";
-		   		echo "<td>$count";
+		   		echo "<td class = \"response\">$count";
 	   			if($anonymity=='0'){
-	   				echo "<td> $row[2]";
+	   				echo "<td class = \"response\"> $row[2]";
 	   			}
 	   			if($type[0] == '1' || $type[0] == '2' || $type[0] == '5'){
 	   				if($row[3] != ""){
 			   			$row_int = (int)$row[3];
 			   			$temp = $options[0];
-			   			echo "<td> $temp[$row_int]";
+			   			echo "<td class = \"response\"> $temp[$row_int]";
 			   		}
 			   		else {
-			   			echo "<td> ";
+			   			echo "<td class = \"response\"> ";
 			   		}
 		   		}
 		   		else if ($type[0] == '4'){
-		   			echo "<td> $row[3]";
+		   			echo "<td class = \"response\"> $row[3]";
 		   		}
 		   		else if ($type[0] == '3' || $type[0] == '6'){
 		   			if($row[3] != ""){
@@ -99,11 +123,11 @@ class SurveyResponse{
 				   				$temp = $options[0];
 				   				$output .= ", ".$temp[$row_int];
 			   				}
-			   			echo "<td> $output";
+			   			echo "<td class = \"response\"> $output";
 		   				}
 		   			}
 		   			else {
-		   				echo "<td> ";
+		   				echo "<td class = \"response\"> ";
 		   			}
 	   			
 	   			}
@@ -113,14 +137,14 @@ class SurveyResponse{
 	   					if($row[3] != ""){
 				   			$row_int = (int)$row[3];
 				   			$temp = $options[$i];
-				   			echo "<td> $temp[$row_int]";
+				   			echo "<td class = \"response\"> $temp[$row_int]";
 				   		}
 				   		else{
-				   			echo "<td>";
+				   			echo "<td class = \"response\">";
 				   		}
 			   		}
 			   		else if ($type[$i] == 4){
-			   			echo "<td> $row[3]";
+			   			echo "<td class = \"response\"> $row[3]";
 			   		}
 			   		else if ($type[$i] == 3 || $type[$i] == 6){
 			   			if($row[3] != ""){
@@ -136,11 +160,11 @@ class SurveyResponse{
 					   				$temp = $options[$i];
 					   				$output .= ", ".$temp[$row_int];
 				   				}
-				   			echo "<td> $output";
+				   			echo "<td class = \"response\" $output";
 			   				}
 			   			}
 			   			else {
-			   				echo "<td> ";
+			   				echo "<td class = \"response\"> ";
 			   			}
 		   			}
 	   			}
@@ -153,6 +177,7 @@ class SurveyResponse{
    	}
 
    	public function form_statistics($form_id){
+
    		$query = pg_prepare($this->db, "questions1", 'select * from survey_questions where form_id=$1');
    		$questions = pg_execute($this->db, "questions1", array($form_id));
 	   	$query = pg_prepare($this->db, "aggregation", 'select count(*) as freq from survey_responses where form_id = $1 and question_id = $2 and response = $3');
@@ -292,12 +317,12 @@ class SurveyResponse{
 
    }	//end of class
 
- $form_id = $_GET['form_id'];
  // echo "$form_id heelo";
  $response = new SurveyResponse();
  $response->fetchResponse($form_id);
  $response->form_statistics($form_id);
 
 ?>
+</div>
 </body>
 </html>

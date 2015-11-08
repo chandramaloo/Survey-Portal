@@ -18,6 +18,7 @@
 	ini_set('display_startup_errors', 1);
 	include('lock.php');
 	include('role.php');
+	include('formClass.php');
 	error_reporting(E_ALL); 
 
 	$host = "host=localhost";
@@ -28,11 +29,8 @@
 	$user_id=$_SESSION['login_user'];
 	$form_id = $_GET['form_id'];	
 
-	$result = pg_prepare($db, "form_data", 'SELECT anonymity, form_name FROM form WHERE form_id=$1');
-	$result = pg_execute($db, "form_data", array($form_id));
-	$row = pg_fetch_row($result);
-	$count = pg_num_rows($result);
-	if($count!=1){
+	$form = new Form();
+	if($form->checkNoForm($form_id) == 1){
 		header("Location: welcome.php");
 	}
 	
