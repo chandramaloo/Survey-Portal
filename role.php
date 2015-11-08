@@ -28,6 +28,16 @@ class Role{
    		return 0;
    	}
 
+   	public function insertAdminRole($form_id, $user_id){
+   		$result = pg_prepare($this->db, "admin$user_id", "INSERT into role values($1, $2, $3, $4)");
+		$result = pg_execute($this->db, "admin$user_id", array($form_id, $user_id, '1', '1'));
+   	}
+
+   	public function insertVoterRole($form_id, $user_id){
+   		$result = pg_prepare($this->db, "user$userid", "INSERT into role values($1, $2, $3, $4)");
+  		$result = pg_execute($this->db, "user$userid", array($form_id, $userid, '0', '0'));
+   	}
+
    	public function updateStatus($user, $form){
 		$flag = '0';
    		$result = pg_prepare($this->db, "update_user_status", 'UPDATE role SET status = \'1\' where user_id = $1 and form_id = $2 and privilege = \'0\'');

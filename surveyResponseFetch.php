@@ -14,6 +14,14 @@ td .response {
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+include('formClass.php');
+
+$form_id = $_GET['form_id'];
+$form = new Form();
+$chk = $form->checkNoForm($form_id);
+if($chk == 1){
+	header("Location: welcome.php");
+}
 
 class SurveyResponse{
 	private $db;
@@ -30,6 +38,7 @@ class SurveyResponse{
    }
 
    	public function fetchResponse($form_id){
+   		//check user credentials
    		//fetch response corresponding to a form
    		$query = pg_prepare($this->db, "form_response", 'Select * from survey_responses where form_id = $1 order by (user_id,question_id)');
    		$result = pg_execute($this->db, "form_response", array($form_id));
@@ -160,6 +169,7 @@ class SurveyResponse{
    	}
 
    	public function form_statistics($form_id){
+
    		$query = pg_prepare($this->db, "questions1", 'select * from survey_questions where form_id=$1');
    		$questions = pg_execute($this->db, "questions1", array($form_id));
 	   	$query = pg_prepare($this->db, "aggregation", 'select count(*) as freq from survey_responses where form_id = $1 and question_id = $2 and response = $3');
@@ -222,7 +232,6 @@ class SurveyResponse{
 
    }	//end of class
 
- $form_id = $_GET['form_id'];
  // echo "$form_id heelo";
  $response = new SurveyResponse();
  $response->fetchResponse($form_id);
