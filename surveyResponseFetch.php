@@ -214,9 +214,9 @@ class SurveyResponse{
 					    datasets: [
 					        {
 					            label: "Percentage",
-					            fillColor: "rgba(220,220,220,0.5)",
-					            strokeColor: "rgba(220,220,220,0.8)",
-					            highlightFill: "rgba(220,220,220,0.75)",
+					            fillColor: "rgba(0,220,0,0.5)",
+					            strokeColor: "rgba(0,204,220,0.8)",
+					            highlightFill: "rgba(0,255,0,0.75)",
 					            highlightStroke: "rgba(220,220,220,1)",
 					            data: perc
 					        }	
@@ -257,8 +257,8 @@ class SurveyResponse{
 					    datasets: [
 					        {
 					            label: "Percentage",
-					            fillColor: "rgba(220,220,220,0.5)",
-					            strokeColor: "rgba(220,220,220,0.8)",
+					            fillColor: "rgba(0,0,220,0.7)",
+					            strokeColor: "rgba(153,220,220,0.8)",
 					            highlightFill: "rgba(220,220,220,0.75)",
 					            highlightStroke: "rgba(220,220,220,1)",
 					            data: perc
