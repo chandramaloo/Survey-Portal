@@ -205,6 +205,7 @@ class SurveyResponse{
 	   					$result = pg_execute($this->db, "aggregation", array($form_id,$row[1],$i));
 	   					$freq_row = pg_fetch_row($result);
 	   					$percentage = $freq_row[0]*100/$num_responses;
+	   					$percentage = number_format((float)$percentage, 2, '.', '');
 	   					echo "opt.push('".$options[$i]."'); perc.push('".$percentage."');";
 	   				}
 	   				
@@ -248,6 +249,7 @@ class SurveyResponse{
 	   				}
 	   				for($i = 0;$i < sizeof($options);$i++){
 	   					$percentage = $freq[$i]*100/$num_responses;
+	   					$percentage = number_format((float)$percentage, 2, '.', '');
 	   					echo "opt.push('".$options[$i]."'); perc.push('".$percentage."');";
 	   				}
 	   				
@@ -280,6 +282,7 @@ class SurveyResponse{
 	   					$result = pg_execute($this->db, "aggregation", array($form_id,$row[1],$i));
 	   					$freq_row = pg_fetch_row($result);
 	   					$percentage = $freq_row[0]*100/$num_responses;
+	   					$percentage = number_format((float)$percentage, 2, '.', '');
 	   					echo "<tr> <td> $options[$i] <td> $freq_row[0] <td> $percentage </tr>";
 	   				}
 	   				echo "</table>";
@@ -307,6 +310,7 @@ class SurveyResponse{
 	   				echo "<tr> <th> Response <th> Frequency <th> Percentage";
 	   				for($i = 0;$i < sizeof($options);$i++){
 	   					$percentage = $freq[$i]*100/$num_responses;
+	   					$percentage = number_format((float)$percentage, 2, '.', '');
 	   					echo "<tr> <td> $options[$i] <td> $freq[$i] <td> $percentage </tr>";
 	   				}
 	   				echo "</table>";
