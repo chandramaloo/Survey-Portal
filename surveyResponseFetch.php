@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="Chart.js"></script>
+	<script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -157,7 +165,84 @@ class SurveyResponse{
 	   		echo "We have no response statistics to display. <br>";
 	   	}
 	   	else{
+	   		echo '<div id="bars"></div>';
 	   		while($row = pg_fetch_row($questions)){
+	   			if($row[2] == '1' || $row[2] == '2' || $row[2] == '5'){
+	   				echo '<script type="text/javascript">{
+						$("#bars").append("<h3>Question '.($row[1]+1).': '.$row[5].'</h3><canvas id=\'myChart-'.$row[1].'\' width=\'200\' height=\'200\'></canvas><br>");
+						var ctx = document.getElementById("myChart-'.$row[1].'").getContext("2d");
+						var opt = []; var perc = [];';
+		   			$num = pg_execute($this->db, "response", array($form_id,$row[1]));
+		   			$num_responses = pg_num_rows($num);
+		   			//extract each response possible from row[6]
+		   			$options = explode("\",\"", substr($row[6],1,-1));
+		   			for($i = 0;$i < sizeof($options);$i++){
+	   					$result = pg_execute($this->db, "aggregation", array($form_id,$row[1],$i));
+	   					$freq_row = pg_fetch_row($result);
+	   					$percentage = $freq_row[0]*100/$num_responses;
+	   					echo "opt.push('".$options[$i]."'); perc.push('".$percentage."');";
+	   				}
+	   				
+		   			echo '
+					var data = {
+			    	labels: opt,
+					    datasets: [
+					        {
+					            label: "Percentage",
+					            fillColor: "rgba(220,220,220,0.5)",
+					            strokeColor: "rgba(220,220,220,0.8)",
+					            highlightFill: "rgba(220,220,220,0.75)",
+					            highlightStroke: "rgba(220,220,220,1)",
+					            data: perc
+					        }	
+					    ]
+					};
+					var myBarChart = new Chart(ctx).Bar(data);}</script>';
+	   			} else if($row[2] == '3' || $row[2] == '6'){
+	   				echo '<script type="text/javascript">{
+						$("#bars").append("<h3>Question '.($row[1]+1).': '.$row[5].'</h3><canvas id=\'myChart-'.$row[1].'\' width=\'200\' height=\'200\'></canvas><br>");
+						var ctx = document.getElementById("myChart-'.$row[1].'").getContext("2d");
+						var opt = []; var perc = [];';
+		   			
+
+	   				$options = explode("\",\"", substr($row[6],1,-1));
+	   				$mcq = pg_execute($this->db, "response", array($form_id,$row[1]));
+	   				$num_responses = pg_num_rows($mcq);
+	   				$freq = array();
+	   				for($i = 0; $i < sizeof($options); $i++){
+	   					$freq[$i] = 0;
+	   				}
+	   				while($mcq_row = pg_fetch_row($mcq)){
+	   					if($mcq_row[3] != ""){
+		   					$mcq_response = explode(",",$mcq_row[3]);
+		   					for($k = 0; $k<sizeof($mcq_response); $k++){
+		   						$row_int = (int)$mcq_response[$k];
+		   						$freq[$row_int]++;
+		   					}
+		   				}
+	   				}
+	   				for($i = 0;$i < sizeof($options);$i++){
+	   					$percentage = $freq[$i]*100/$num_responses;
+	   					echo "opt.push('".$options[$i]."'); perc.push('".$percentage."');";
+	   				}
+	   				
+		   			echo '
+					var data = {
+			    	labels: opt,
+					    datasets: [
+					        {
+					            label: "Percentage",
+					            fillColor: "rgba(220,220,220,0.5)",
+					            strokeColor: "rgba(220,220,220,0.8)",
+					            highlightFill: "rgba(220,220,220,0.75)",
+					            highlightStroke: "rgba(220,220,220,1)",
+					            data: perc
+					        }	
+					    ]
+					};
+					var myBarChart = new Chart(ctx).Bar(data);}</script>';
+	   			}
+	   			
 	   			if($row[2] == '1' || $row[2] == '2' || $row[2] == '5'){
 	   				$num = pg_execute($this->db, "response", array($form_id,$row[1]));
 	   				$num_responses = pg_num_rows($num);
@@ -214,3 +299,5 @@ class SurveyResponse{
  $response->form_statistics($form_id);
 
 ?>
+</body>
+</html>
