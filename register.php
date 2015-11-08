@@ -60,6 +60,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 </head>
+<style type="text/css">
+	.panel-title, .jumbotron {
+		text-align: center;
+	}
+	.panel-body {
+		padding: 30px;
+	}
+</style>
 <body>
 
 <div class="jumbotron">
@@ -72,17 +80,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   <div class="panel-body">
 	<form action="register.php" method="post" class = "form-horizontal">
 	<div class="form-group">	
-		<label>UserID :</label>
+		<label>UserID* :</label>
 		<input type="text" class="form-control" name="userID"/><br />
-		<label>User Name :</label>
+		<label>User Name* :</label>
 		<input type="text" class="form-control" name="username"/><br />
-		<label>Password :</label>
+		<label>Password* :</label>
 		<input type="password" class="form-control" name="password"/><br/>
-		<label>Department :</label>
+		<label>Department* :</label>
 		<input type="text" class="form-control" name="department"/><br />
-		<label>Year :</label>
+		<label>Year* :</label>
 		<input type="text" class="form-control" name="year"/><br />
-		<label>Email :</label>
+		<label>Email* :</label>
 		<input type="text" class="form-control" name="email"/><br />
 		<input type="submit" class="btn btn-primary btn-lg" value=" Submit "/><br />
 	</div>
