@@ -38,7 +38,7 @@ $role->insertAdminRole($form_id, $user_id);
 
 for($i = 0; $i < $selected_users; $i++) {
   	$userid = pg_escape_string($_POST['select'][$i]);
-  	$role->insertVoterRole($form_id, $user_id);
+  	$role->insertVoterRole($form_id, $userid);
   	// $result = pg_prepare($db, "user$userid", "INSERT into role values($1, $2, $3, $4)");
   	// $result = pg_execute($db, "user$userid", array($form_id, $userid, '0', '0'));
 }
